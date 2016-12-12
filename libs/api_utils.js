@@ -61,11 +61,38 @@ utils.convertToPage = function (page, pageSize, totalItem, pageList) {
     }
 }
 
-
 String.prototype.curString = function (length, additional = '', startIndex = 0) {
     return this.length > length
         ? this.substr(startIndex, length) + additional
         : this.substr(startIndex, length)
+}
+
+String.prototype.trimStart = function (trimStr) {
+    if (!trimStr) {
+        return this;
+    }
+    var temp = this;
+    while (true) {
+        if (temp.substr(0, trimStr.length) != trimStr) {
+            break;
+        }
+        temp = temp.substr(trimStr.length);
+    }
+    return temp;
+}
+
+String.prototype.trimEnd = function (trimStr) {
+    if (!trimStr) {
+        return this;
+    }
+    var temp = this;
+    while (true) {
+        if (temp.substr(temp.length - trimStr.length, trimStr.length) != trimStr) {
+            break;
+        }
+        temp = temp.substr(0, temp.length - trimStr.length);
+    }
+    return temp;
 }
 
 Array.prototype.groupBy = function (key) {

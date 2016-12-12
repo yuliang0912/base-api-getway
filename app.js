@@ -12,9 +12,6 @@ app.use(require('./middleware/selfonly/api_response')(app))
 require('koa-validate')(app)
 require('./router/auto-router')(app)
 
-//app.use(require('./http-proxy/http-proxy'));
-//app.use(require('./http-proxy/fetch-proxy'))
-
 app.listen(config.port, ()=> {
     console.log('Server running on port:' + config.port)
 })
@@ -22,7 +19,5 @@ app.listen(config.port, ()=> {
 app.on('error', err=> {
     console.log('server error', err);
 })
-
-
 
 

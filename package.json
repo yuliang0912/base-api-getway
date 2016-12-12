@@ -23,6 +23,7 @@
     "moment": "^2.17.1",
     "mysql": "^2.12.0",
     "node-fetch": "^1.6.3",
-    "request": "^2.79.0"
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1"
   }
 }

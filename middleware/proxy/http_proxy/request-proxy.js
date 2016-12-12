@@ -2,29 +2,21 @@
  * Created by yuliang on 2016/12/5.
  */
 
-var co = require('co')
-var request = require('request')
+const co = require('co')
+const Promise = require('bluebird')
+const request = require('request-promise')
+const apiCode = require('../../../libs/api_code_enum')
 
-module.exports = co.wrap(function *(ctx, next) {
-    yield test().then(body=> {
-        ctx.body = body
+module.exports = co.wrap(function *(url) {
+    var options = {
+        uri: url,
+        //headers: this.req.headers,
+        resolveWithFullResponse: true
+    }
+
+    yield request(options).then(response=> {
+        this.body = response.body;
+    }).timeout(1500).catch(Promise.TimeoutError, ()=> {
+        this.error("代理请求已超时", apiCode.errCodeEnum.requestTimeoutError, apiCode.retCodeEnum.agentError)
     })
 })
-
-
-function test() {
-    return new Promise(function (resolve, reject) {
-        request.get('http://eapi.ciwong.com/v5/userlogs/getLogs?userId=155014', {
-            auth: {
-                user: '155014',
-                pass: '1',
-                sendImmediately: true
-            }
-        }, function (err, response, body) {
-            if (err) {
-                return reject(err)
-            }
-            resolve(body)
-        })
-    })
-}

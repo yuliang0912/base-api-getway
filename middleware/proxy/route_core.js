@@ -34,6 +34,8 @@ var proxyRoutes = [
 ]
 
 function buildUrl(route, currUrl, search) {
+
+
     var baseUrl = route.host;
     if (route.port > 0) {
         baseUrl += ":" + route.port;
@@ -47,7 +49,7 @@ function buildUrl(route, currUrl, search) {
     return baseUrl
 }
 
-var proxyService = require('./http_proxy/http-proxy')
+var proxyService = require('./http_proxy/request-proxy')
 module.exports = co.wrap(function *() {
 
     var path = this.path + "/"
@@ -60,5 +62,6 @@ module.exports = co.wrap(function *() {
         this.status = 404
         this.error("未能成功匹配路由,请检查配置", apiCode.errCodeEnum.notFoundAgentServerError, apiCode.retCodeEnum.agentError)
     }
-    this.success(buildUrl(route, this.url, this.search))
+    yield proxyService.call(this, "http://eapi.ciwong.com/v5/userlogs/getLogs?userId=155014")
+    //this.success(buildUrl(route, this.url, this.search))
 })

@@ -38,7 +38,7 @@ module.exports = {
         var sign = this.checkQuery("sign").notEmpty().value;
         this.errors && this.validateError()
 
-        yield coms.channelCom.hmac.main.call(this)
+        yield coms.channelCom.hmacSign.main.call(this)
 
         if (this.oauth.clientInfo.publicKey !== publickKey) {
             this.error('publickKey不匹配')

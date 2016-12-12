@@ -70,7 +70,7 @@ module.exports = function (app) {
         ctx.body = "welcome to cw-api-getway"
     }))
 
-    router.all('/oauth/*', autoRouter)
+    router.all('/(oauth|route)/*', autoRouter)
 
     router.all('/*', require('../middleware/process_center'))
 

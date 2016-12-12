@@ -8,7 +8,9 @@ const co = require('co')
 const _ = require('lodash')
 const Promise = require('bluebird')
 const coms = require('./channel_com_center')
-const proxyCore = require('./proxy/route_core')
+const routeAuthorize = require('./authorize/route_proxy_authorize')
+
+const proxyService = require('./proxy/http_proxy/request-proxy')
 
 module.exports = co.wrap(function *(ctx, next) {
 
@@ -17,6 +19,8 @@ module.exports = co.wrap(function *(ctx, next) {
         return;
     }
 
+    yield routeAuthorize.call(ctx)
+
     var apiCom = "oauth"
 
     var currApiCom = coms.channelComKeys.filter(t=>apiCom.indexOf(t) > -1).map(com=> {
@@ -24,6 +28,7 @@ module.exports = co.wrap(function *(ctx, next) {
     })
 
     yield Promise.all(currApiCom)
-    yield proxyCore.call(ctx).then(next)
+
+    yield proxyService.call(ctx, ctx.authorize.proxyUrl)
 })
 
