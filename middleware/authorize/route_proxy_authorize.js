@@ -24,7 +24,7 @@ module.exports = co.wrap(function *() {
     }
 
     var routeKey = "/" + scheme.join("/") + "/"
-    var proxyRoutes = yield apiGetwayService.getApiRoutes(routeKey)
+    var proxyRoutes = yield apiGetwayService.getApiRoutes(this.headers.host, routeKey)
     if (proxyRoutes.length === 0) {
         this.error("未能成功匹配路由,请检查配置", apiCode.errCodeEnum.notFoundAgentServerError, apiCode.retCodeEnum.agentError)
     }
@@ -40,20 +40,21 @@ module.exports = co.wrap(function *() {
         this.error("未能成功匹配路由,请检查配置", apiCode.errCodeEnum.notFoundAgentServerError, apiCode.retCodeEnum.agentError)
     }
 
+    route.config = JSON.parse(route.config);
+
     this.authorize.proxyRoute = route
-    this.authorize.proxyUrl = buildUrl(route, this.url, this.search)
+    this.authorize.proxyUrl = parseUrl(route, this.url, this.search)
+
+    return route
 })
 
-function buildUrl(route, currUrl, search) {
-    var baseUrl = route.host;
-    if (route.port > 0) {
-        baseUrl += ":" + route.port;
-    }
+function parseUrl(route, currUrl, search) {
+    var proxyUrl = "http://" + route.redirectHost;
     if (route.type === 1) { //范围代理
-        baseUrl += currUrl.replace(route.routeUrl, route.forwardUrl)
+        proxyUrl += currUrl.replace(route.routeUrl, route.forwardUrl)
     }
     else if (route.type === 2) { //接口代理
-        baseUrl += route.forwardUrl.trimEnd('/') + search
+        proxyUrl += route.forwardUrl.trimEnd('/') + search
     }
-    return baseUrl
+    return proxyUrl
 }

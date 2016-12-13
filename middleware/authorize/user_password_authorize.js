@@ -11,11 +11,13 @@ module.exports = co.wrap(function*(userId, password) {
     this.authorize.flow.push('passWord')
 
     var userInfo = {}
-    var isPass = false
+    var isPass = true
 
     if (!isPass) {
         this.error('用户名或者密码错误', apiCode.errCodeEnum.passWordError, apiCode.retCodeEnum.authenticationFailure)
     }
 
     this.authorize.userInfo = userInfo
+
+    return userInfo;
 })

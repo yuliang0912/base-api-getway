@@ -9,7 +9,9 @@ const channelComMapping = {
     oauth: "oauth2.0",
     basice: "basice_auth",
     logs: "logs",
-    hmacSign: "hmac"
+    hmacSign: "hmac",
+    whiteList: "white_list",
+    blackList: "black_list",
 }
 
 var channelComKeys = Object.keys(channelComMapping)

@@ -21,13 +21,12 @@ module.exports = co.wrap(function *(ctx, next) {
 
     yield routeAuthorize.call(ctx)
 
-    var apiCom = "oauth"
-
-    var currApiCom = coms.channelComKeys.filter(t=>apiCom.indexOf(t) > -1).map(com=> {
-        return coms.channelCom[com].main.call(ctx, ctx)
-    })
-
-    yield Promise.all(currApiCom)
+    if (Array.isArray(ctx.authorize.proxyRoute.config.auth)) {
+        var currApiCom = coms.channelComKeys.filter(t=>ctx.authorize.proxyRoute.config.auth.indexOf(t) > -1).map(com=> {
+            return coms.channelCom[com].main.call(ctx, ctx)
+        })
+        yield Promise.all(currApiCom)
+    }
 
     yield proxyService.call(ctx, ctx.authorize.proxyUrl)
 })

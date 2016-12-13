@@ -11,6 +11,10 @@ const tokenService = require('../service/oauth_service')
 module.exports = co.wrap(function*(clientId) {
     this.authorize.flow.push('client')
 
+    if (this.authorize.clientInfo) {
+        return this.authorize.clientInfo
+    }
+
     var clientInfo = yield tokenService.getClient(clientId)
 
     if (!clientInfo || clientInfo.status !== 0) {
@@ -18,4 +22,6 @@ module.exports = co.wrap(function*(clientId) {
     }
 
     this.authorize.clientInfo = clientInfo
+
+    return clientInfo
 })

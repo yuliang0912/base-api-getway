@@ -15,7 +15,8 @@ module.exports = {
 
         yield apiGetwayService.getApiRoutes(routeUrl).then(this.success)
     },
-    routeTest: function () {
-
+    routeTest: function *() {
+        console.log(this.request.body);
+        this.success(this.request.body)
     }
 }

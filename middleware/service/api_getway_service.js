@@ -6,7 +6,7 @@
 const getwayKnex = require('../../db_helper/knex').apiGetway
 
 module.exports = {
-    getApiRoutes: function (routeUrl) {
-        return getwayKnex("apiRoutes").where('routeUrl', 'like', routeUrl + '%').select()
+    getApiRoutes: function (domainHost, routeUrl) {
+        return getwayKnex("apiRoutes").where({domainHost}).where('routeUrl', 'like', routeUrl + '%').select()
     }
 }

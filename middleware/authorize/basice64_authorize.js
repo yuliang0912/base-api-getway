@@ -29,4 +29,6 @@ module.exports = co.wrap(function*() {
     yield userPwdAuthorize.call(this, userId, passWord)
 
     this.authorize.userId = userId;
+
+    return userId;
 });

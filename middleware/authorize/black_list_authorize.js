@@ -6,7 +6,16 @@
 
 const co = require('co')
 const apiCode = require('../../libs/api_code_enum')
+const whiteBlackListService = require('../service/white_black_list_service')
 
-module.exports = co.wrap(function*() {
+module.exports = co.wrap(function*(routeId, host) {
     this.authorize.flow.push('blackList')
+
+    var blackList = yield whiteBlackListService.getBwList(routeId, 1);
+
+    if (blackList.some(t=>t.host === host)) {
+        this.error("没有访问权限", apiCode.errCodeEnum.blackListError, apiCode.retCodeEnum.authenticationFailure)
+    }
+
+    return true
 })

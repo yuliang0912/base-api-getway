@@ -14,4 +14,6 @@ module.exports = co.wrap(function *(content, sign) {
     if (apiUtils.crypto.md5(content) !== sign) {
         this.error('sign签名不匹配', apiCode.errCodeEnum.hmacsha1SignError, apiCode.retCodeEnum.oauthError)
     }
+
+    return true
 })

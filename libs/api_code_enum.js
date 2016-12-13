@@ -50,6 +50,10 @@ const errCodeEnum = {
     "notFoundAgentServerError": 22,
     //请求超时错误
     "requestTimeoutError": 23,
+    //黑名单,禁止访问
+    "blackListError": 24,
+    //白名单,没有权限
+    "whiteListError": 25,
     "apiError": 100
 };
 
