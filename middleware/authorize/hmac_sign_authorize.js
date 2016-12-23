@@ -9,7 +9,7 @@ const apiUtils = require('../../libs/api_utils')
 const apiCode = require('../../libs/api_code_enum')
 
 module.exports = co.wrap(function *(content, key, sign) {
-    this.authorize.flow.push('hmacSing')
+    this.authorize.flow.push('hmacSign')
 
     if (apiUtils.crypto.hmacSha1(content, key) !== sign) {
         console.log("正确签名应该是:" + apiUtils.crypto.hmacSha1(content, key));

@@ -59,6 +59,7 @@ module.exports = function (app) {
             throw Object.assign(new Error(msg),
                 {errCode: apiCode.errCodeEnum.paramTypeError});
         };
+
         ctx.allow = (passMethod = 'GET')=> {
             var validateResult = false;
             if (_.isString(passMethod)) {
@@ -73,16 +74,19 @@ module.exports = function (app) {
                     {errCode: apiCode.errCodeEnum.refusedRequest});
             }
             return this;
-        };
+        }
+
         ctx.allowJson = (()=> {
             if (this.header['content-type'] !== 'application/json') {
                 this.error('content-type错误,必须是application/json');
             }
             return this;
-        });
+        })
+
         ctx.authorize = {flow: []} //此处存放验证相关的信息
+
         try {
-            ctx.set("X-Response-For", getIPAdress());
+            ctx.set("X-Agent-Response-For", getIPAdress());
             yield next();
             if (ctx.response.status === 404 && ctx.body === undefined) {
                 ctx.body = buildReturnObject(apiCode.retCodeEnum.success,
@@ -91,12 +95,12 @@ module.exports = function (app) {
         } catch (e) {
             if (e == undefined) {
                 e = new Error("未定义的错误")
-            }else {
+            } else {
                 ctx.body = buildReturnObject(e.retCode || apiCode.retCodeEnum.serverError,
                     e.errCode || apiCode.errCodeEnum.autoSnapError, e.toString());
             }
         }
-    });
+    })
 } 
 
 

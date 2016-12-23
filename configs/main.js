@@ -14,7 +14,7 @@ module.exports = {
     env: env,
     port: port,
     static: {
-        directory: path.resolve(__dirname, '../web')
+        directory: path.resolve(__dirname, '../public')
     },
     bodyparser: {},
     auth: {},

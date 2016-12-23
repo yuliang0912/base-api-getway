@@ -5,19 +5,21 @@
 const co = require('co')
 const httpProxy = require('http-proxy')
 const Promise = require('bluebird')
-const proxy = httpProxy.createProxyServer();
+const proxy = httpProxy.createProxyServer({auth: "572219626:1"});
 
-module.exports = co.wrap(function *(ctx, next) {
+module.exports = co.wrap(function *() {
+    var self = this;
+
     function proxyWeb() {
         return new Promise(function (resolve, reject) {
-            proxy.web(ctx.req, ctx.res, {
-                target: 'http://eapi.ciwong.com/v5/userlogs/getLogs?userId=155014&'
-                //forward: 'http://www.ciwong.com'
+            proxy.web(self.req, self.res, {
+                target: self.authorize.proxyUrl
             }, function (e) {
                 reject(e);
             });
 
-            proxy.on('proxyRes', function (proxyRes, req, res, options) {
+            proxy.on('response', function (proxyRes, req, res, options) {
+                console.log(11)
                 resolve(res);
             });
 
@@ -28,9 +30,9 @@ module.exports = co.wrap(function *(ctx, next) {
     }
 
     yield proxyWeb().timeout(10000).catch(Promise.TimeoutError, e=> {
-        ctx.body = "接口已经超时"
+        this.body = "接口已经超时"
     }).catch(e=> {
-        ctx.body = e;
+        this.body = e;
     })
 })
 

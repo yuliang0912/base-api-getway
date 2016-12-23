@@ -5,7 +5,7 @@
 const co = require('co')
 const Promise = require('bluebird')
 const request = require('request-promise')
-const apiCode = require('../../../libs/api_code_enum')
+const apiCode = require('../../libs/api_code_enum')
 
 module.exports = co.wrap(function *() {
 
@@ -20,7 +20,8 @@ module.exports = co.wrap(function *() {
         body: this.request.body,
         form: this.request.body,
         resolveWithFullResponse: true,
-        json: true
+        json: true,
+        encoding: null
     }
 
     if (this.authorize.tokenInfo) {
@@ -30,11 +31,17 @@ module.exports = co.wrap(function *() {
     }
 
     yield request(options).then(response=> {
-        if (response.statusCode === 404) {
-
-        }
         this.body = response.body
-    }).timeout(10000).catch(Promise.TimeoutError, ()=> {
+    }).timeout(30000).catch(Promise.TimeoutError, ()=> {
         this.error("代理请求已超时", apiCode.errCodeEnum.requestTimeoutError, apiCode.retCodeEnum.agentError)
+    }).catch(error=> {
+        var msg = "源服务器错误";
+        if (error['statusCode']) {
+            msg += ",[状态码]:" + error.statusCode
+        }
+        if (error['error']) {
+            msg += ",[错误详情]:" + error['error'].toString()
+        }
+        this.error(msg, apiCode.errCodeEnum.originalServerError, apiCode.retCodeEnum.agentError)
     })
 })

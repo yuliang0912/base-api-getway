@@ -54,6 +54,8 @@ const errCodeEnum = {
     "blackListError": 24,
     //白名单,没有权限
     "whiteListError": 25,
+    //源服务器请求异常
+    "originalServerError": 26,
     "apiError": 100
 };
 
