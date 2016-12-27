@@ -3,9 +3,12 @@
  */
 
 "use strict"
-const _ = require('lodash');
-const apiCode = require('./../../libs/api_code_enum');
-const co = require('co');
+const co = require('co')
+const _ = require('lodash')
+const knexLog = require('../../libs/log4')('db')
+const trackLog = require('../../libs/log4')('track')
+const apiCode = require('./../../libs/api_code_enum')
+
 var hostIpAddress;
 
 function buildReturnObject(ret, errCode, msg, data) {
@@ -44,6 +47,9 @@ function getIPAdress() {
 //定义apiResponse的输出响应结果
 module.exports = function (app) {
     return co.wrap(function *(ctx, next) {
+        //是否是跟踪模式
+        let ISTRACK = ctx.headers['track-log'] === "true"
+
         ctx.success = (data) => {
             ctx.body = buildReturnObject(apiCode.retCodeEnum.success, apiCode.errCodeEnum.success, 'success', data);
             return;
@@ -77,31 +83,47 @@ module.exports = function (app) {
         }
 
         ctx.allowJson = (()=> {
-            if (this.header['content-type'] !== 'application/json') {
-                this.error('content-type错误,必须是application/json');
+            if (ctx.headers['content-type'] !== 'application/json') {
+                ctx.error('content-type错误,必须是application/json');
             }
-            return this;
+            return ctx;
+        })
+
+        //追踪记录
+        ctx.trackLog = ((data)=> {
+            ISTRACK && trackLog.trace(data)
         })
 
         ctx.authorize = {flow: []} //此处存放验证相关的信息
 
+        ISTRACK && ctx.trackLog("====start:开始本次请求跟踪====")
+        ISTRACK && ctx.trackLog("当前URL:" + ctx.url)
+
         try {
-            ctx.set("X-Agent-Response-For", getIPAdress());
-            yield next();
+            ctx.set("X-Agent-Response-For", getIPAdress())
+            yield next()
             if (ctx.response.status === 404 && ctx.body === undefined) {
                 ctx.body = buildReturnObject(apiCode.retCodeEnum.success,
-                    apiCode.errCodeEnum.notReturnData, 'success', null);
+                    apiCode.errCodeEnum.notReturnData, 'success', null)
             }
+            ISTRACK && ctx.trackLog("响应数据:" + JSON.stringify(ctx.body))
+            ISTRACK && ctx.trackLog("====end:结束本次请求跟踪====")
         } catch (e) {
-            if (e == undefined) {
+            if (e === undefined || e === null) {
                 e = new Error("未定义的错误")
-            } else {
-                ctx.body = buildReturnObject(e.retCode || apiCode.retCodeEnum.serverError,
-                    e.errCode || apiCode.errCodeEnum.autoSnapError, e.toString());
             }
+            else if (e.fatal && e.code && e.errno) { //knex相关错误
+                knexLog.fatal(e.toString())
+            }
+
+            ctx.body = buildReturnObject(e.retCode || apiCode.retCodeEnum.serverError,
+                e.errCode || apiCode.errCodeEnum.autoSnapError, e.toString());
+
+            ISTRACK && ctx.trackLog("出现异常错误:" + e.toString())
+            ISTRACK && ctx.trackLog("====end:结束本次请求跟踪====")
         }
     })
-} 
+}
 
 
 

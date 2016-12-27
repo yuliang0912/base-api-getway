@@ -9,11 +9,13 @@ const _ = require('lodash')
 const Promise = require('bluebird')
 const coms = require('./channel_com_center')
 const routeAuthorize = require('./authorize/route_proxy_authorize')
-
 const proxyService = require('./proxy/request-proxy')
 //const proxyService = require('./proxy/http-proxy')
 
 module.exports = co.wrap(function *(ctx, next) {
+
+    ctx.trackLog("进入代理主流程")
+
     yield routeAuthorize.call(ctx)
 
     if (Array.isArray(ctx.authorize.proxyRoute.config.auth)) {
@@ -27,12 +29,14 @@ module.exports = co.wrap(function *(ctx, next) {
     yield proxyService.call(ctx)
     var msEnd = Date.now()
 
-    //此处做善后处理,例如
-    console.log("====本次代理信息start=====")
-    console.log("原始请求地址:http://" + ctx.headers.host + ctx.url)
-    console.log("实际代理地址:" + ctx.authorize.proxyUrl)
-    console.log("本次代理认证流程:" + ctx.authorize.flow)
-    console.log("本次源服务器响应用时:" + (msEnd - ms))
-    console.log("====本次代理信息end=====")
+    // //此处做善后处理,例如
+    // debug("====本次代理信息start=====")
+    // debug("原始请求地址:http://" + ctx.headers.host + ctx.url)
+    // debug("实际代理地址:" + ctx.authorize.proxyUrl)
+    // debug("本次代理认证流程:" + ctx.authorize.flow)
+    // debug("本次源服务器响应用时:" + (msEnd - ms))
+    // debug("====本次代理信息end=====")
+
+    ctx.trackLog("代理主流程结束")
 })
 

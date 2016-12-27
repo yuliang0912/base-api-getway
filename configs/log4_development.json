@@ -1,0 +1,30 @@
+{
+  "appenders": [
+    {
+      "type": "console",
+      "category": "koa"
+    },
+    {
+      "type": "console",
+      "category": "db"
+    },
+    {
+      "type": "dateFile",
+      "filename": "logs/track/",
+      "alwaysIncludePattern": true,
+      "pattern": "log-yyyy-MM-dd.log",
+      "category": "track"
+    },
+    {
+      "type": "console",
+      "category": "console"
+    }
+  ],
+  "replaceConsole": true,
+  "levels": {
+    "console": "All",
+    "koa": "All",
+    "db": "All",
+    "track": "TRACE"
+  }
+}

@@ -10,6 +10,8 @@ const userPwdAuthorize = require('./user_password_authorize')
 
 module.exports = co.wrap(function*() {
 
+    this.trackLog("开始进行basice64认证")
+
     this.authorize.flow.push('basice64')
 
     var authStr = this.header.authorization || "";
@@ -20,6 +22,7 @@ module.exports = co.wrap(function*() {
 
     if (!userPass) {
         this.response.status = 401;
+        this.trackLog("basice64认证失败")
         this.error("未认证的请求", apiCode.errCodeEnum.basiceAuthError, apiCode.retCodeEnum.authenticationFailure)
     }
 
@@ -29,6 +32,6 @@ module.exports = co.wrap(function*() {
     yield userPwdAuthorize.call(this, userId, passWord)
 
     this.authorize.userId = userId;
-
+    this.trackLog("basice64认证成功")
     return userId;
 });

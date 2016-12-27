@@ -33,6 +33,9 @@ fs.readdirSync(path.join(__dirname, ctrlPath)).forEach(ctrlName=> {
 apiCtrollers = Object.freeze(apiCtrollers)
 
 var autoRouter = co.wrap(function *(ctx) {
+
+    ctx.trackLog("开始自动匹配路由")
+
     let scheme = ctx.path.toLowerCase().split('/').filter(item=> item.trim().length > 0);
 
     if (scheme.length <= 1) {
@@ -60,6 +63,8 @@ var autoRouter = co.wrap(function *(ctx) {
         throw Object.assign(new Error("未找到指定的接口"),
             {errCode: apiCode.errCodeEnum.notFoundApiAction});
     }
+
+    ctx.trackLog("自动匹配路由成功")
 
     yield action.call(ctx)
 })

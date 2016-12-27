@@ -8,7 +8,7 @@ const request = require('request-promise')
 const apiCode = require('../../libs/api_code_enum')
 
 module.exports = co.wrap(function *() {
-
+    this.trackLog("进入http代理")
     if (!this.authorize.proxyUrl) {
         this.error("未找到代理地址", apiCode.errCodeEnum.notFoundAgentServerError, apiCode.retCodeEnum.agentError)
     }
@@ -33,9 +33,10 @@ module.exports = co.wrap(function *() {
     yield request(options).then(response=> {
         this.body = response.body
     }).timeout(30000).catch(Promise.TimeoutError, ()=> {
+        this.trackLog("代理请求已超时")
         this.error("代理请求已超时", apiCode.errCodeEnum.requestTimeoutError, apiCode.retCodeEnum.agentError)
     }).catch(error=> {
-        var msg = "源服务器错误";
+        var msg = "源服务器错误"
         if (error['statusCode']) {
             msg += ",[状态码]:" + error.statusCode
         }
@@ -44,4 +45,5 @@ module.exports = co.wrap(function *() {
         }
         this.error(msg, apiCode.errCodeEnum.originalServerError, apiCode.retCodeEnum.agentError)
     })
+    this.trackLog("http代理结束")
 })

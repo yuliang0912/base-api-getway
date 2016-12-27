@@ -10,6 +10,9 @@ var crypto = require('crypto')
 var utils = module.exports = {};
 
 utils.crypto = {
+    sha512: function (text, digest = "hex") {
+        return crypto.createHash('sha512').update(text).digest(digest)
+    },
     hmacSha1: function (text, key, digest = "hex") {
         return crypto.createHmac('sha1', key).update(text).digest(digest)
     },

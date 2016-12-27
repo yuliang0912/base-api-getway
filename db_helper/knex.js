@@ -4,17 +4,21 @@
 
 "use strict"
 
+const kenx = require('knex')
+const log = require('../libs/log4')('db')
+
 const dbConfig = process.env.NODE_ENV === 'production'
     ? require('./../configs/dbconfig_production.json')
     : require('./../configs/dbconfig_development.json')
 
-const apiGetway = require('knex')({
+const apiGetway = kenx({
     client: 'mysql',
     connection: {
         host: dbConfig.apiGetway.config.host,
         user: dbConfig.apiGetway.username,
         password: dbConfig.apiGetway.password,
-        database: dbConfig.apiGetway.database
+        database: dbConfig.apiGetway.database,
+        charset: 'utf8'
     },
     pool: {
         min: dbConfig.apiGetway.config.minConnections,
@@ -24,6 +28,39 @@ const apiGetway = require('knex')({
     debug: false // process.env.NODE_ENV !== 'production'
 })
 
+
+const userInfo = kenx({
+    client: 'mysql',
+    connection: {
+        host: dbConfig.userInfo.config.host,
+        user: dbConfig.userInfo.username,
+        password: dbConfig.userInfo.password,
+        database: dbConfig.userInfo.database,
+        charset: 'utf8'
+    },
+    pool: {
+        min: dbConfig.userInfo.config.minConnections,
+        max: dbConfig.userInfo.config.maxConnections,
+    },
+    acquireConnectionTimeout: dbConfig.userInfo.config.maxIdleTime,
+    debug: false // process.env.NODE_ENV !== 'production'
+})
+
 module.exports = {
-    apiGetway: apiGetway
+    apiGetway: apiGetway,
+    userInfo: userInfo
 }
+
+userInfo.on('query-error', function (error, obj) {
+    log.error("===========userInfo error begin===============")
+    log.error(error.toString())
+    log.error(JSON.stringify(obj))
+    log.error("===========end===============")
+})
+
+apiGetway.on('query-error', function (error, obj) {
+    log.error("===========apiGateWay error begin===============")
+    log.error(error.toString())
+    log.error(JSON.stringify(obj))
+    log.error("===========end===============")
+})
