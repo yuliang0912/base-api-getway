@@ -1,31 +1,31 @@
 {
   "apiGetway": {
-    "username": "root",
-    "password": "root",
+    "username": "ciwong_sabin",
+    "password": "dianzibao2015",
     "database": "cw_api_getway",
     "config": {
-      "host": "192.168.1.64",
+      "host": "rdsji4782vw39828axxz.mysql.rds.aliyuncs.com",
       "port": 3306,
       "dialect": "mysql",
       "timezone": "+08:00",
       "pool": {
-        "maxConnections": 200,
+        "maxConnections": 600,
         "minConnections": 3,
         "maxIdleTime": 10000
       }
     }
   },
   "userInfo": {
-    "username": "root",
-    "password": "root",
-    "database": "db_user_info",
+    "username": "ciwong_sabin",
+    "password": "dianzibao2015",
+    "database": "user_info",
     "config": {
-      "host": "192.168.1.64",
+      "host": "rdsji4782vw39828axxz.mysql.rds.aliyuncs.com",
       "port": 3306,
       "dialect": "mysql",
       "timezone": "+08:00",
       "pool": {
-        "maxConnections": 200,
+        "maxConnections": 600,
         "minConnections": 3,
         "maxIdleTime": 10000
       }
