@@ -28,6 +28,7 @@ module.exports = co.wrap(function *(ctx, next) {
     var ms = Date.now()
     yield proxyService.call(ctx)
     var msEnd = Date.now()
+    ctx.set("response-time", (msEnd - ms));
 
     // //此处做善后处理,例如
     // debug("====本次代理信息start=====")

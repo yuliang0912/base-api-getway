@@ -12,7 +12,7 @@ const dbConfig = process.env.NODE_ENV === 'production'
     : require('./../configs/dbconfig_development.json')
 
 const apiGetway = kenx({
-    client: 'mysql',
+    client: 'mysql2',
     connection: {
         host: dbConfig.apiGetway.config.host,
         user: dbConfig.apiGetway.username,
@@ -30,7 +30,7 @@ const apiGetway = kenx({
 
 
 const userInfo = kenx({
-    client: 'mysql',
+    client: 'mysql2',
     connection: {
         host: dbConfig.userInfo.config.host,
         user: dbConfig.userInfo.username,

@@ -3,7 +3,6 @@
  */
 
 "use strict"
-var knex = require('knex')
 const userKnex = require('../../db_helper/knex').userInfo
 
 module.exports = {

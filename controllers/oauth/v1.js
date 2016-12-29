@@ -10,11 +10,11 @@ const coms = require('../../middleware/channel_com_center')
 
 module.exports = {
     noAuths: [],
-    getToken: function *() {
-        var clientId = this.checkQuery("clientId").notEmpty().toInt().value;
-        var userId = this.checkQuery("userId").notEmpty().toInt().value;
-        var passWord = this.checkQuery("passWord").notEmpty().toInt().value;
-        var publicKey = this.checkQuery("publicKey").notEmpty().value;
+    token: function *() {
+        var clientId = this.checkQuery("client_id").notEmpty().toInt().value;
+        var userId = this.checkQuery("username").notEmpty().toInt().value;
+        var passWord = this.checkQuery("password").notEmpty().toInt().value;
+        //var publicKey = this.checkQuery("publicKey").notEmpty().value;
         this.errors && this.validateError()
 
         var userInfo = yield userService.getUserInfo({userId})
@@ -29,9 +29,9 @@ module.exports = {
         if (!clientInfo || clientInfo.status !== 0) {
             this.error('clientId错误或client status异常')
         }
-        if (clientInfo.publicKey !== publicKey) {
-            this.error('publickKey不匹配')
-        }
+        // if (clientInfo.publicKey !== publicKey) {
+        //     this.error('publickKey不匹配')
+        // }
 
         //此处验证userId和passWord
         var userToken = yield tokenService.getTokenByUserId(clientInfo.groupId, userId)

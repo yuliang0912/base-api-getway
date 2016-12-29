@@ -27,6 +27,9 @@ module.exports = co.wrap(function *() {
     }
 
     var routeKey = "/" + scheme.join("/") + "/"
+
+    this.trackLog("开始路由验证host:" + this.headers.host)
+
     var proxyRoutes = yield apiGetwayService.getApiRoutes(this.headers.host, routeKey)
     if (proxyRoutes.length === 0) {
         this.trackLog("路由验证失败")

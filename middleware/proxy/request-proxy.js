@@ -16,7 +16,7 @@ module.exports = co.wrap(function *() {
     var options = {
         method: this.req.method,
         uri: this.authorize.proxyUrl,
-        headers: {},
+        headers: this.headers,
         body: this.request.body,
         form: this.request.body,
         resolveWithFullResponse: true,
@@ -31,6 +31,9 @@ module.exports = co.wrap(function *() {
     }
 
     yield request(options).then(response=> {
+        Object.keys(response.headers).forEach(header=> {
+            this.set(header, response.headers[header])
+        })
         this.body = response.body
     }).timeout(30000).catch(Promise.TimeoutError, ()=> {
         this.trackLog("代理请求已超时")

@@ -70,17 +70,17 @@ module.exports = function (app) {
             var validateResult = false;
             if (_.isString(passMethod)) {
                 passMethod = passMethod.toUpperCase();
-                validateResult = passMethod === 'ALL' || this.method === passMethod;
+                validateResult = passMethod === 'ALL' || ctx.req.method === passMethod;
             }
             else if (Array.isArray(passMethod)) {
-                validateResult = passMethod.some(item => item.toUpperCase() === this.method);
+                validateResult = passMethod.some(item => item.toUpperCase() === ctx.req.method);
             }
             if (!validateResult) {
-                throw Object.assign(new Error("接口不支持" + this.method + "请求"),
+                throw Object.assign(new Error("接口不支持" + ctx.req.method + "请求"),
                     {errCode: apiCode.errCodeEnum.refusedRequest});
             }
-            return this;
-        }
+            return ctx;
+        };
 
         ctx.allowJson = (()=> {
             if (ctx.headers['content-type'] !== 'application/json') {

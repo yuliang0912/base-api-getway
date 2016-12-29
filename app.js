@@ -7,7 +7,7 @@ const config = require('./configs/main')
 const bodyparser = require('koa-bodyparser')
 const log = require('./libs/log4')('koa')
 
-app.use(require('koa-static')(config.static.directory))
+//app.use(require('koa-static')(config.static.directory))
 app.use(bodyparser())
 app.use(require('./middleware/selfonly/api_response')(app))
 require('koa-validate')(app)
@@ -15,7 +15,6 @@ require('./router/auto-router')(app)
 
 app.listen(config.port, ()=> {
     console.log('Server running on port:' + config.port)
-    log.info("Server running on port:" + config.port)
 })
 
 app.on('error', err=> {
@@ -25,3 +24,5 @@ app.on('error', err=> {
 process.on('unhandledRejection', function (err) {
     log.warn("unhandledRejectionLogs:" + err.stack)
 })
+
+

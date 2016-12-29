@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "cw-api-getway",
+      "name": "cw-api-gateway",
       "script": "app.js",
       "node_args": "-harmony",
       "watch": true,
@@ -9,7 +9,8 @@
       "instances": 2,
       "log_date_format": "YYYY-MM-DD HH:mm:ss",
       "env": {
-        "NODE_ENV": "production"
+        "NODE_ENV": "production",
+        "PORT": "8000"
       }
     }
   ]
