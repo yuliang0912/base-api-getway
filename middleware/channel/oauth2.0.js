@@ -9,14 +9,15 @@ const clientAuthorize = require('../authorize/client_authorize')
 const tokenAuthorize = require('../authorize/token_authorize')
 
 module.exports.main = co.wrap(function *() {
-    var clientId = this.checkQuery("clientId").notEmpty().value
+    var clientId = this.checkQuery("clientId").notEmpty().toInt().value
     var accessToken = this.checkQuery("accessToken").notEmpty().value
     this.errors && this.validateError()
 
     var clientAsync = clientAuthorize.call(this, clientId)
-    var tokenAsync = tokenAuthorize.call(this, accessToken)
+    var tokenAsync = tokenAuthorize.call(this, accessToken, clientId)
 
     yield Promise.all([clientAsync, tokenAsync])
+
     return true;
 })
 

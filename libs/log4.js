@@ -4,21 +4,31 @@
 
 'use strict'
 
-var logList = {}
+const fs = require('fs')
 const log4js = require('koa-log4')
+const config = process.env.NODE_ENV === 'production'
+    ? require("../configs/log4_production.json")
+    : require("../configs/log4_development.json")
+
+// if (!fs.existsSync("logs")) {
+//     fs.mkdir("logs")
+// }
+
+var logs = module.exports = {}
+
+log4js.configure(config)
+
+config.appenders.forEach(log=> {
+    // if (log.category === "console" || fs.exists("logs/" + log.category)) {
+    //     return;
+    // }
+    // fs.mkdir("logs/" + log.category)
 
 
-log4js.configure(process.env.NODE_ENV === 'production'
-    ? "configs/log4_production.json"
-    : "configs/log4_development.json")
+    logs[log.category] = log4js.getLogger(log.category)
+})
 
-module.exports = function (logName) {
-    if (logName === null || logName === undefined) {
-        throw Error('logName is NotDefined')
-    }
-    if (logList[logName]) {
-        return logList[logName]
-    }
-    logList[logName] = log4js.getLogger(logName)
-    return logList[logName]
-}
+
+
+
+

@@ -9,13 +9,13 @@ const moment = require('moment')
 const apiCode = require('../../libs/api_code_enum')
 const tokenService = require('../service/oauth_service')
 
-module.exports = co.wrap(function*(accessToken) {
+module.exports = co.wrap(function*(accessToken, clientId) {
     this.authorize.flow.push('token')
     this.trackLog("开始进行accessToken认证")
 
     var token = yield tokenService.getToken(accessToken)
 
-    if (!token) {
+    if (!token || token.clientId !== clientId) {
         this.trackLog("token认证失败")
         this.error('未找到有效token', apiCode.errCodeEnum.accessTokenError, apiCode.retCodeEnum.oauthError)
     }

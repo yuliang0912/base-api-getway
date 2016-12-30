@@ -5,8 +5,8 @@
 "use strict"
 const co = require('co')
 const _ = require('lodash')
-const knexLog = require('../../libs/log4')('db')
-const trackLog = require('../../libs/log4')('track')
+const knexLog = require('../../libs/log4').db
+const trackLog = require('../../libs/log4').track
 const apiCode = require('./../../libs/api_code_enum')
 
 var hostIpAddress;
@@ -116,8 +116,14 @@ module.exports = function (app) {
                 knexLog.fatal(e.toString())
             }
 
-            ctx.body = buildReturnObject(e.retCode || apiCode.retCodeEnum.serverError,
-                e.errCode || apiCode.errCodeEnum.autoSnapError, e.toString());
+            if (e.retCode === undefined) {
+                e.retCode = apiCode.retCodeEnum.serverError
+            }
+            if (e.errCode === undefined) {
+                e.errCode = apiCode.errCodeEnum.autoSnapError
+            }
+
+            ctx.body = buildReturnObject(e.retCode, e.errCode, e.toString());
 
             ISTRACK && ctx.trackLog("出现异常错误:" + e.toString())
             ISTRACK && ctx.trackLog("====end:结束本次请求跟踪====")

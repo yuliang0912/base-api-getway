@@ -5,7 +5,7 @@
 "use strict"
 
 const kenx = require('knex')
-const log = require('../libs/log4')('db')
+const log = require('../libs/log4').db
 
 const dbConfig = process.env.NODE_ENV === 'production'
     ? require('./../configs/dbconfig_production.json')

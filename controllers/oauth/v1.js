@@ -19,10 +19,10 @@ module.exports = {
 
         var userInfo = yield userService.getUserInfo({userId})
         if (!userInfo) {
-            this.error('用户名和密码不匹配')
+            this.error('用户名和密码不匹配', 10004, 0)
         }
         if (userInfo.PassWord !== apiUtils.crypto.sha512(passWord + userInfo.SaltValue).toUpperCase()) {
-            this.error('用户名和密码不匹配')
+            this.error('用户名和密码不匹配', 10004, 0)
         }
 
         var clientInfo = yield tokenService.getClient(clientId)
@@ -75,7 +75,7 @@ function convertToOldToken(token) {
         expires_in: token.expireDate,
         openid: token.userId.toString(),
         refresh_token: token.refreshToken,
-        refresh_token_expires_in: token.refreshTokenExpireDate,
+        //refresh_token_expires_in: token.refreshTokenExpireDate,
         token_type: "bearer"
     }
 }

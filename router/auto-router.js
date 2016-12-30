@@ -8,7 +8,6 @@ const co = require('co')
 const fs = require('fs')
 const path = require('path')
 const ctrlPath = '../controllers'
-const router = require('koa-router')()
 const apiCode = require('../libs/api_code_enum')
 
 var apiCtrollers = {}
@@ -32,16 +31,18 @@ fs.readdirSync(path.join(__dirname, ctrlPath)).forEach(ctrlName=> {
 
 apiCtrollers = Object.freeze(apiCtrollers)
 
-var autoRouter = co.wrap(function *(ctx) {
+
+module.exports = co.wrap(function *(ctx) {
 
     ctx.trackLog("开始自动匹配路由")
 
     let scheme = ctx.path.toLowerCase().split('/').filter(item=> item.trim().length > 0);
 
     if (scheme.length <= 1) {
-        ctx.body = 'welcome to cw-api-getway'
-        return;
+        throw Object.assign(new Error("未找到指定的接口"),
+            {errCode: apiCode.errCodeEnum.notFoundController});
     }
+
     if (scheme.length == 2) {
         scheme.splice(1, 0, "v1");
     }
@@ -68,16 +69,3 @@ var autoRouter = co.wrap(function *(ctx) {
 
     yield action.call(ctx)
 })
-
-module.exports = function (app) {
-
-    router.get('/', co.wrap(function *(ctx, next) {
-        ctx.body = "welcome to cw-api-getway"
-    }))
-
-    router.all('/(oauth|route)/*', autoRouter)
-
-    router.all('/*', require('../middleware/process_center'))
-
-    app.use(router.routes()).use(router.allowedMethods())
-}
