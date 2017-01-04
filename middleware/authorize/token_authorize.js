@@ -22,7 +22,7 @@ module.exports = co.wrap(function*(accessToken, clientId) {
 
     if (token.expireDate < moment().format("X")) {
         this.trackLog("token认证失败,已过期")
-        this.error("token已过期", apiCode.errCodeEnum.accessTokenError, apiCode.retCodeEnum.oauthError)
+        this.error("token已过期", apiCode.errCodeEnum.accessTokenTimeOutError, apiCode.retCodeEnum.oauthError)
     }
 
     this.authorize.tokenInfo = token

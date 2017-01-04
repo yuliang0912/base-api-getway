@@ -16,7 +16,7 @@
     "ioredis": "^2.4.3",
     "knex": "^0.12.6",
     "koa": "^2.0.0-alpha.7",
-    "koa-bodyparser": "^3.2.0",
+    "koa-body": "^2.0.0",
     "koa-favicon": "^2.0.0",
     "koa-log4": "^2.1.0",
     "koa-router": "^7.0.1",

@@ -23,10 +23,10 @@ Object.keys(channelComMapping).forEach(item=> {
 module.exports.channelCom = channelCom
 module.exports.channelComKeys = channelComKeys
 
-module.exports.authorize = {
-    basice64: require('./authorize/basice64_authorize'),
-    client: require('./authorize/client_authorize'),
-    hmac: require('./authorize/hmac_sign_authorize'),
-    token: require('./authorize/token_authorize'),
-    passWord: require('./authorize/user_password_authorize'),
-}
+// module.exports.authorize = {
+//     basice64: require('./authorize/basice64_authorize'),
+//     client: require('./authorize/client_authorize'),
+//     hmac: require('./authorize/hmac_sign_authorize'),
+//     token: require('./authorize/token_authorize'),
+//     passWord: require('./authorize/user_password_authorize'),
+// }

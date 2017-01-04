@@ -4,12 +4,13 @@
 
 const app = new (require('koa'))
 const config = require('./configs/main')
-const bodyparser = require('koa-bodyparser')
+const koaBody = require('koa-body')
 const log = require('./libs/log4').koa
 
 //app.use(require('koa-static')(config.static.directory))
-app.use(bodyparser())
+
 app.use(require('./middleware/selfonly/api_response')(app))
+app.use(koaBody())
 require('koa-validate')(app)
 require('./router/index')(app)
 

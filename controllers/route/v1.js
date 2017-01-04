@@ -3,6 +3,7 @@
  */
 
 const apiGetwayService = require('../../middleware/service/api_getway_service')
+const routeAuthorize = require('../../middleware/authorize/route_proxy_authorize')
 
 module.exports = {
     getRoutes: function *() {
@@ -16,7 +17,9 @@ module.exports = {
         yield apiGetwayService.getApiRoutes(routeUrl).then(this.success)
     },
     routeTest: function *() {
-        console.log(this.request.body);
-        this.success(this.request.body)
+
+        yield routeAuthorize.call(this)
+
+        this.success(this.authorize.proxyUrl)
     }
 }

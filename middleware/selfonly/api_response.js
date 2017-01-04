@@ -19,7 +19,11 @@ function buildReturnObject(ret, errCode, msg, data) {
     if (_.isNumber(errCode)) {
         result.errcode = parseInt(errCode);
     }
-    result.msg = (msg || "success").toString();
+
+    result.msg = msg
+    if (msg === undefined) {
+        result.msg = "success"
+    }
 
     if (!Object.is(data, undefined)) {
         result.data = data;
@@ -47,6 +51,11 @@ function getIPAdress() {
 //定义apiResponse的输出响应结果
 module.exports = function (app) {
     return co.wrap(function *(ctx, next) {
+        //截取nginx代理标识符
+        if (ctx.url.indexOf("/gateway/") === 0) {
+            ctx.url = ctx.url.trimStart("/gateway")
+        }
+
         //是否是跟踪模式
         let ISTRACK = ctx.headers['track-log'] === "true"
 
@@ -61,7 +70,7 @@ module.exports = function (app) {
         };
 
         ctx.validateError = function () {
-            var msg = "参数校验失败,details:" + JSON.stringify(this.errors);
+            var msg = '参数校验失败,details:' + JSON.stringify(this.errors);
             throw Object.assign(new Error(msg),
                 {errCode: apiCode.errCodeEnum.paramTypeError});
         };

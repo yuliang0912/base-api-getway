@@ -42,7 +42,7 @@ const errCodeEnum = {
     "refreshTokenError": 18,
     //hmac签名验证相关错误
     "hmacsha1SignError": 19,
-    //API主动抛出的错误,接口内部错误范围100-200
+    //basice认证相关错误
     "basiceAuthError": 20,
     //用户密码验证相关错误
     "passWordError": 21,
@@ -56,6 +56,8 @@ const errCodeEnum = {
     "whiteListError": 25,
     //源服务器请求异常
     "originalServerError": 26,
+    //token过期
+    "accessTokenTimeOutError": 27,
     "apiError": 100
 };
 
