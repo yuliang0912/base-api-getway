@@ -1,38 +1,39 @@
 {
-  "appenders": [
-    {
-      "type": "dateFile",
-      "filename": "logs/koa/",
-      "alwaysIncludePattern": true,
-      "pattern": "log-yyyy-MM-dd.log",
-      "category": "koa"
+    "appenders": [{
+            "absolute": true,
+            "type": "dateFile",
+            "filename": "/opt/logs/koa/",
+            "alwaysIncludePattern": true,
+            "pattern": "log-yyyy-MM-dd.log",
+            "category": "koa"
+        },
+        {
+            "absolute": true,
+            "type": "dateFile",
+            "filename": "/opt/logs/db/",
+            "alwaysIncludePattern": true,
+            "pattern": "log-yyyy-MM-dd.log",
+            "category": "db"
+        },
+        {
+            "absolute": true,
+            "type": "dateFile",
+            "filename": "/opt/logs/track/",
+            "alwaysIncludePattern": true,
+            "pattern": "log-yyyy-MM-dd.log",
+            "category": "track"
+        },
+        {
+            "type": "console",
+            "category": "console"
+        }
+    ],
+    "replaceConsole": true,
+    "levels": {
+        "console": "ALL",
+        "koa": "ALL",
+        "db": "WARN",
+        "track": "TRACE"
     },
-    {
-      "type": "dateFile",
-      "filename": "logs/db/",
-      "alwaysIncludePattern": true,
-      "pattern": "log-yyyy-MM-dd.log",
-      "category": "db"
-    },
-    {
-      "type": "dateFile",
-      "filename": "logs/track/",
-      "alwaysIncludePattern": true,
-      "pattern": "log-yyyy-MM-dd.log",
-      "category": "track"
-    },
-    {
-      "type": "console",
-      "category": "console"
-    }
-  ],
-  "replaceConsole": true,
-  "levels": {
-    "console": "ALL",
-    "koa": "ALL",
-    "db": "WARN",
-    "track": "TRACE"
-  },
-  "zhushi": "//log4js 8个级别分别是:ALL TRACE DEBUG INFO WARN ERROR FATAL OFF"
+    "zhushi": "//log4js 8个级别分别是:ALL TRACE DEBUG INFO WARN ERROR FATAL OFF"
 }
-
