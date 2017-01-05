@@ -71,6 +71,17 @@ module.exports = {
 
         yield tokenService.refreshToken(refreshTokenInfo).then(convertToOldToken)
             .then(token=>this.body = token)
+    },
+    clientInfo: function *() {
+        var clientId = this.checkQuery("clientId").notEmpty().value;
+        var sign = this.checkQuery("sign").notEmpty().value;
+        this.errors && this.validateError()
+
+        if (sign != "e74a35f5d1b61d1ff68852b004bd09c4") {
+            this.error("sign错误")
+        }
+
+        yield tokenService.getClient(clientId).then(this.success)
     }
 }
 
