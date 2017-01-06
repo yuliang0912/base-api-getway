@@ -14,7 +14,6 @@ const proxyService = require('./proxy/request-proxy')
 
 module.exports = co.wrap(function *(ctx, next) {
     ctx.trackLog("进入代理主流程")
-
     yield routeAuthorize.call(ctx)
 
     if (Array.isArray(ctx.authorize.proxyRoute.config.auth)) {
@@ -26,8 +25,7 @@ module.exports = co.wrap(function *(ctx, next) {
 
     var ms = Date.now()
     yield proxyService.call(ctx)
-    var msEnd = Date.now()
-    ctx.set("response-time", (msEnd - ms));
+    ctx.set("Original-Agent-Time", (Date.now() - ms));
 
     // //此处做善后处理,例如
     // debug("====本次代理信息start=====")

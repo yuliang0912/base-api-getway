@@ -6,14 +6,8 @@ const co = require('co')
 const Promise = require('bluebird')
 const request = require('request-promise')
 const apiCode = require('../../libs/api_code_enum')
-const _ = require('lodash')
 
 module.exports = co.wrap(function *() {
-
-    if (this.headers['content-type'] === undefined) {
-        this.headers['content-type'] = "text/plain;charset=UTF-8";
-    }
-
     var options = {
         method: this.req.method,
         uri: this.authorize.proxyUrl,
@@ -23,17 +17,29 @@ module.exports = co.wrap(function *() {
         encoding: null
     }
 
-    if (options.method === "POST") {
-        if (this.headers['content-type'] === 'application/x-www-form-urlencoded') {
-            options.form = this.request.body
-        }
-        else if (_.isString(this.request.body) || (_.isObject(this.request.body) && Object.keys(this.request.body).length > 0)) {
-            options.body = this.request.body
-        }
+    options.headers.host = this.authorize.proxyRoute.redirectHost
+
+    if (!options.headers['content-type']) {
+        options.headers['content-type'] = "text/plain;charset=UTF-8"
+    }
+    if (!options.headers['accept']) {
+        options.headers['accept'] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+    }
+    if (!options.headers['accept-language']) {
+        options.headers['accept-language'] = "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3"
     }
 
-    if (this.headers['content-type'] === 'application/json') {
-        options.json = true
+    if (["GET", "HEAD", "DELETE"].indexOf(this.method.toUpperCase()) === -1) {
+        if (this.is('urlencoded')) {
+            options.form = this.request.body
+        }
+        else if (this.is('json')) {
+            options.body = this.request.body
+            options.json = true
+        }
+        else {
+            options.body = this.request.body
+        }
     }
 
     //body经过处理之后长度可能发生变化,删除此属性防止服务器一直等待接收数据
@@ -50,7 +56,7 @@ module.exports = co.wrap(function *() {
             this.set(header, response.headers[header])
         })
         this.body = response.body
-    }).timeout(30).catch(Promise.TimeoutError, ()=> {
+    }).timeout(30000).catch(Promise.TimeoutError, ()=> {
         this.trackLog("代理请求已超时")
         this.error("代理请求已超时", apiCode.errCodeEnum.requestTimeoutError, apiCode.retCodeEnum.agentError)
     }).catch(error=> {
@@ -72,6 +78,7 @@ module.exports = co.wrap(function *() {
         } else {
             msg += ",[错误详情04]:" + errorInfo.toString()
         }
+        this.trackLog("http代理出现错误:" + msg)
         this.error(msg, apiCode.errCodeEnum.originalServerError, apiCode.retCodeEnum.agentError)
     })
     this.trackLog("http代理结束")
