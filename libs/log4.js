@@ -24,7 +24,6 @@ config.appenders.forEach(log=> {
     // }
     // fs.mkdir("logs/" + log.category)
 
-
     logs[log.category] = log4js.getLogger(log.category)
 })
 

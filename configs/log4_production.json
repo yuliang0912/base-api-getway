@@ -1,24 +1,22 @@
 {
-    "appenders": [{
-            "absolute": true,
+    "appenders": [
+        {
             "type": "dateFile",
-            "filename": "/opt/logs/koa/",
+            "filename": "logs/koa/",
             "alwaysIncludePattern": true,
             "pattern": "log-yyyy-MM-dd.log",
             "category": "koa"
         },
         {
-            "absolute": true,
             "type": "dateFile",
-            "filename": "/opt/logs/db/",
+            "filename": "logs/db/",
             "alwaysIncludePattern": true,
             "pattern": "log-yyyy-MM-dd.log",
             "category": "db"
         },
         {
-            "absolute": true,
             "type": "dateFile",
-            "filename": "/opt/logs/track/",
+            "filename": "logs/track/",
             "alwaysIncludePattern": true,
             "pattern": "log-yyyy-MM-dd.log",
             "category": "track"
