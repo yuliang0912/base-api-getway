@@ -1,24 +1,15 @@
 {
   "appenders": [
     {
-      "type": "dateFile",
-      "filename": "logs/koa/",
-      "alwaysIncludePattern": true,
-      "pattern": "log-yyyy-MM-dd.log",
+      "type": "console",
       "category": "koa"
     },
     {
-      "type": "dateFile",
-      "filename": "logs/db/",
-      "alwaysIncludePattern": true,
-      "pattern": "log-yyyy-MM-dd.log",
+      "type": "console",
       "category": "db"
     },
     {
-      "type": "dateFile",
-      "filename": "logs/track/",
-      "alwaysIncludePattern": true,
-      "pattern": "log-yyyy-MM-dd.log",
+      "type": "console",
       "category": "track"
     },
     {
