@@ -6,10 +6,18 @@
       "node_args": "-harmony",
       "watch": true,
       "exec_mode": "cluster",
-      "instances": 2,
+      "error_file": "./logs/koa/pm2-err.log",
+      "instances": "max",
       "log_date_format": "YYYY-MM-DD HH:mm:ss",
+      "ignore_watch": [
+        "logs"
+      ],
       "env": {
         "NODE_ENV": "production",
+        "PORT": "8000"
+      },
+      "env_development": {
+        "NODE_ENV": "development",
         "PORT": "8000"
       }
     }

@@ -6,11 +6,6 @@
 
 const koaBody = require('koa-body')
 
-module.exports = function () {
-    var options = {
-        onError: function (err, ctx) {
-            ctx.error("body解析错误:" + err.toString())
-        }
-    }
-    return koaBody(options)
+module.exports = function (app) {
+    return koaBody()
 }

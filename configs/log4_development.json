@@ -1,11 +1,17 @@
 {
   "appenders": [
     {
-      "type": "console",
+      "type": "dateFile",
+      "filename": "logs/koa/",
+      "alwaysIncludePattern": true,
+      "pattern": "log-yyyy-MM-dd.log",
       "category": "koa"
     },
     {
-      "type": "console",
+      "type": "dateFile",
+      "filename": "logs/db/",
+      "alwaysIncludePattern": true,
+      "pattern": "log-yyyy-MM-dd.log",
       "category": "db"
     },
     {
@@ -22,9 +28,10 @@
   ],
   "replaceConsole": true,
   "levels": {
-    "console": "All",
-    "koa": "All",
-    "db": "All",
+    "console": "ALL",
+    "koa": "ALL",
+    "db": "WARN",
     "track": "TRACE"
-  }
+  },
+  "zhushi": "//log4js 8个级别分别是:ALL TRACE DEBUG INFO WARN ERROR FATAL OFF"
 }

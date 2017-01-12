@@ -16,10 +16,10 @@ RUN npm install
 COPY . /opt/apt-getway/
 
 #ENV
-VOLUME ['/opt/logs','/opt/logs/db','/opt/logs/koa','/opt/logs/track']
+#VOLUME ['/opt/logs','/opt/logs/db','/opt/logs/koa','/opt/logs/track']
 
-ENV NODE_ENV production
+ENV NODE_ENV development
 
-EXPOSE 1201
+EXPOSE 8000
 
 ENTRYPOINT pm2 start pm2.json --no-daemon

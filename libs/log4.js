@@ -10,6 +10,8 @@ const config = process.env.NODE_ENV === 'production'
     ? require("../configs/log4_production.json")
     : require("../configs/log4_development.json")
 
+//const config = require("../configs/log4_production.json");
+
 // if (!fs.existsSync("logs")) {
 //     fs.mkdir("logs")
 // }
@@ -26,6 +28,7 @@ config.appenders.forEach(log=> {
 
     logs[log.category] = log4js.getLogger(log.category)
 })
+
 
 
 

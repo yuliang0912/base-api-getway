@@ -13,13 +13,11 @@ const apiCode = require('../../libs/api_code_enum')
 module.exports = {
     noAuths: [],
     token: function *() {
-
         var clientId = this.checkQuery("client_id").notEmpty().toInt().value;
-        var userId = this.checkQuery("username").notEmpty().value;
+        var userId = this.checkQuery("username").notEmpty().toInt().value;
         var passWord = this.checkQuery("password").notEmpty().value;
         //var publicKey = this.checkQuery("publicKey").notEmpty().value;
         this.errors && this.validateError()
-
         var userInfo = yield userService.getUserInfo({userId})
         if (!userInfo) {
             this.error('用户名和密码不匹配', 10004, 0)

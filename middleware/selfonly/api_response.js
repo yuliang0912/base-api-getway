@@ -91,7 +91,7 @@ module.exports = function (app) {
         }
 
         ctx.allowJson = (()=> {
-            if (ctx.headers['content-type'] !== 'application/json') {
+            if (!ctx.is("json")) {
                 ctx.error('content-type错误,必须是application/json');
             }
             return ctx;
@@ -107,7 +107,6 @@ module.exports = function (app) {
         ISTRACK && ctx.trackLog("====start:开始本次请求跟踪====")
         ISTRACK && ctx.trackLog("当前URL:" + ctx.url)
         ISTRACK && ctx.trackLog("当前headers:" + JSON.stringify(ctx.headers))
-
         try {
             ctx.set("X-Agent-Response-For", getIPAdress())
             yield next()
@@ -115,7 +114,6 @@ module.exports = function (app) {
                 ctx.body = buildReturnObject(apiCode.retCodeEnum.success,
                     apiCode.errCodeEnum.notReturnData, 'success', null)
             }
-
             ISTRACK && ctx.trackLog("当前body:" + JSON.stringify(ctx.request.body))
             ISTRACK && ctx.trackLog("响应数据:" + JSON.stringify(ctx.body))
             ISTRACK && ctx.trackLog("====end:结束本次请求跟踪====")
@@ -124,17 +122,14 @@ module.exports = function (app) {
                 e = new Error("未定义的错误")
             }
             else if (e.fatal && e.code && e.errno) { //knex相关错误
-                logs.knex.fatal(e.toString())
+                logs.db.fatal(e.toString())
             }
-
             if (e.retCode === undefined) {
-
                 e.retCode = apiCode.retCodeEnum.serverError
             }
             if (e.errCode === undefined) {
                 e.errCode = apiCode.errCodeEnum.autoSnapError
             }
-
             ctx.body = buildReturnObject(e.retCode, e.errCode, e.toString());
 
             ISTRACK && ctx.trackLog("出现异常错误:" + e.toString())
