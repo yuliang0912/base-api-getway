@@ -99,7 +99,7 @@ module.exports = function (app) {
 
         //追踪记录
         ctx.trackLog = ((data)=> {
-            ISTRACK && logs.track.trace(data)
+            ISTRACK && logs.track.getLogger().trace(data)
         })
 
         ctx.authorize = {flow: []} //此处存放验证相关的信息
@@ -109,6 +109,9 @@ module.exports = function (app) {
         ISTRACK && ctx.trackLog("当前headers:" + JSON.stringify(ctx.headers))
         try {
             ctx.set("X-Agent-Response-For", getIPAdress())
+            if (process.env.pm_id !== undefined) {
+                ctx.set("X-Agent-Server-Id", process.env.pm_id)
+            }
             yield next()
             if (ctx.response.status === 404 && ctx.body === undefined) {
                 ctx.body = buildReturnObject(apiCode.retCodeEnum.success,
@@ -122,7 +125,7 @@ module.exports = function (app) {
                 e = new Error("未定义的错误")
             }
             else if (e.fatal && e.code && e.errno) { //knex相关错误
-                logs.db.fatal(e.toString())
+                logs.db.getLogger().fatal(e.toString())
             }
             if (e.retCode === undefined) {
                 e.retCode = apiCode.retCodeEnum.serverError

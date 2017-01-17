@@ -14,7 +14,7 @@ module.exports = {
     noAuths: [],
     token: function *() {
         var clientId = this.checkQuery("client_id").notEmpty().toInt().value;
-        var userId = this.checkQuery("username").notEmpty().toInt().value;
+        var userId = this.checkQuery("username").notEmpty().value;
         var passWord = this.checkQuery("password").notEmpty().value;
         //var publicKey = this.checkQuery("publicKey").notEmpty().value;
         this.errors && this.validateError()

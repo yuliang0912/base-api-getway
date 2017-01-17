@@ -18,7 +18,7 @@
   "userInfo": {
     "username": "ciwong_sabin",
     "password": "dianzibao2015",
-    "database": "user_info",
+    "database": "db_userinfo",
     "config": {
       "host": "rdsji4782vw39828axxz.mysql.rds.aliyuncs.com",
       "port": 3306,

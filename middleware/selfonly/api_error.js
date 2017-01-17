@@ -6,6 +6,7 @@
 "use strict"
 const co = require('co')
 const apiCode = require('./../../libs/api_code_enum')
+const log = require('../../libs/log4').koa
 
 module.exports = function (app) {
     return co.wrap(function *(ctx, next) {
@@ -17,6 +18,7 @@ module.exports = function (app) {
                 errcode: apiCode.errCodeEnum.autoSnapError,
                 msg: e ? e.toString() : "未定义的错误"
             }
+            log.getLogger().error(e.toString())
         }
     })
 }

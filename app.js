@@ -5,7 +5,6 @@
 const app = new (require('koa'))
 const config = require('./configs/main')
 const log = require('./libs/log4').koa
-const cluster = require('cluster')
 
 //app.use(require('koa-static')(config.static.directory))
 
@@ -16,23 +15,14 @@ require('koa-validate')(app)
 require('./router/index')(app)
 
 app.listen(config.port, ()=> {
-    console.log('Server running on port:%s,isMaster:', config.port, cluster.isMaster)
+    console.log('Server running on port:%s', config.port)
 })
 
 app.on('error', (err, ctx)=> {
-    log.fatal(err.toString())
+    log.getLogger().fatal(err.toString() + "ctx.request:" + JSON.stringify(ctx.request))
 })
 
 process.on('unhandledRejection', function (err) {
-    log.warn("unhandledRejectionLogs:" + err.stack)
+    log.getLogger().warn("unhandledRejectionLogs:" + err.stack)
 })
-
-process.on('SIGINT', function (err) {
-    log.fatal("pm2-error" + err.toString())
-});
-
-//
-// Buffer.prototype.toByteArray = function () {
-//     return Array.prototype.slice.call(this, 0)
-// }
 

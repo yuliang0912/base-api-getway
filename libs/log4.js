@@ -4,29 +4,32 @@
 
 'use strict'
 
-const fs = require('fs')
 const log4js = require('koa-log4')
+
 const config = process.env.NODE_ENV === 'production'
-    ? require("../configs/log4_production.json")
-    : require("../configs/log4_development.json")
+    ? require("../configs/log4_production.js")
+    : require("../configs/log4_development.js")
 
-//const config = require("../configs/log4_production.json");
+log4js.configure(config.generic);
+log4js.loadAppender('dateFile');
+log4js.loadAppender('file');
 
-// if (!fs.existsSync("logs")) {
-//     fs.mkdir("logs")
-// }
-
-var logs = module.exports = {}
-
-log4js.configure(config)
-
-config.appenders.forEach(log=> {
-    // if (log.category === "console" || fs.exists("logs/" + log.category)) {
-    //     return;
-    // }
-    // fs.mkdir("logs/" + log.category)
-
-    logs[log.category] = log4js.getLogger(log.category)
+config.category.appenders.forEach(item=> {
+    let logInstance
+    module.exports[item.category] = {
+        getLogger: function () {
+            if (!logInstance) {
+                if (item.type === "dateFile") {
+                    log4js.addAppender(log4js.appenders.dateFile(item.filename, item.pattern, undefined, item), item.category);
+                } else if (item.type === "file") {
+                    log4js.addAppender(log4js.appenders.file(item.filename, undefined, item.maxLogSize, item.backups, item), item.category);
+                }
+                logInstance = log4js.getLogger(item.category)
+                logInstance.setLevel(item.level || "all")
+            }
+            return logInstance
+        }
+    }
 })
 
 

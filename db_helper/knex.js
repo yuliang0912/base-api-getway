@@ -52,15 +52,15 @@ module.exports = {
 }
 
 userInfo.on('query-error', function (error, obj) {
-    log.error("===========userInfo error begin===============")
-    log.error(error.toString())
-    log.error(JSON.stringify(obj))
-    log.error("===========end===============")
+    log.getLogger().error("===========userInfo error begin===============")
+    log.getLogger().error(error.toString())
+    log.getLogger().error(JSON.stringify(obj))
+    log.getLogger().error("===========end===============")
 })
 
 apiGetway.on('query-error', function (error, obj) {
-    log.error("===========apiGateWay error begin===============")
-    log.error(error.toString())
-    log.error(JSON.stringify(obj))
-    log.error("===========end===============")
+    log.getLogger().error("===========apiGateWay error begin===============")
+    log.getLogger().error(error.toString())
+    log.getLogger().error(JSON.stringify(obj))
+    log.getLogger().error("===========end===============")
 })
