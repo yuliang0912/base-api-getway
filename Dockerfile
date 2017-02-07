@@ -20,6 +20,6 @@ COPY . /opt/apt-getway/
 
 ENV NODE_ENV development
 
-EXPOSE 8000
+EXPOSE 8002
 
 ENTRYPOINT pm2 start pm2.json --no-daemon --env test
