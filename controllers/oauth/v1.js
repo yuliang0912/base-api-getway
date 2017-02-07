@@ -2,7 +2,6 @@
  * Created by yuliang on 2016/12/6.
  */
 
-
 const moment = require('moment')
 const apiUtils = require('../../libs/api_utils')
 const tokenService = require('../../middleware/service/oauth_service')

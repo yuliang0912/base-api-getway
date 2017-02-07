@@ -9,6 +9,11 @@ var crypto = require('crypto')
 
 var utils = module.exports = {};
 
+utils.pm2 = {
+    isPm2Server: process.env._pm2_version !== undefined && process.env.pm_id >= 0,
+    pm2WorkId: process.env.pm_id
+}
+
 utils.crypto = {
     sha512: function (text, digest = "hex") {
         return crypto.createHash('sha512').update(text).digest(digest)
@@ -22,12 +27,19 @@ utils.crypto = {
 }
 
 
+utils.isEmptyObject = function (obj) {
+    if (!obj || !(obj instanceof Object)) {
+        return false
+    }
+    return Object.keys(obj).length === 0
+}
+
 utils.createInt16Number = function () {
     return Math.floor(Math.random() * 10000000000000000);
 }
 
 utils.getUuid = function () {
-    return uuid.v1();
+    return uuid.v4();
 }
 
 utils.get64RandomStr = function () {

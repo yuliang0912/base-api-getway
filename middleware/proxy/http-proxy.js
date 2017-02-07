@@ -12,18 +12,21 @@ module.exports = co.wrap(function *() {
 
     function proxyWeb() {
         return new Promise(function (resolve, reject) {
+            console.log(self.req.set("host", "127.0.0.1"))
             proxy.web(self.req, self.res, {
                 target: self.authorize.proxyUrl
             }, function (e) {
+                console.log(3243242)
                 reject(e);
             });
 
-            proxy.on('response', function (proxyRes, req, res, options) {
-                console.log(11)
+            proxy.on('proxyRes', function (proxyRes, req, res, options) {
+                console.log(11111111)
                 resolve(res);
             });
 
             proxy.on('error', function (e) {
+                console.log(e)
                 reject(e);
             });
         })

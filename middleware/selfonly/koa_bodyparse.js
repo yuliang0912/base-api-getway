@@ -7,5 +7,5 @@
 const koaBody = require('koa-body')
 
 module.exports = function (app) {
-    return koaBody()
+    return koaBody({multipart: false})
 }

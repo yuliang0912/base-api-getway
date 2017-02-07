@@ -52,14 +52,14 @@ module.exports = {
 }
 
 userInfo.on('query-error', function (error, obj) {
-    log.getLogger().error("===========userInfo error begin===============")
+    log.getLogger().error("===========knex:userInfo error begin===============")
     log.getLogger().error(error.toString())
     log.getLogger().error(JSON.stringify(obj))
     log.getLogger().error("===========end===============")
 })
 
 apiGetway.on('query-error', function (error, obj) {
-    log.getLogger().error("===========apiGateWay error begin===============")
+    log.getLogger().error("===========knex:apiGateWay error begin===============")
     log.getLogger().error(error.toString())
     log.getLogger().error(JSON.stringify(obj))
     log.getLogger().error("===========end===============")

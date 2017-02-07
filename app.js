@@ -1,6 +1,7 @@
 /**
  * Created by yuliang on 2016/12/1.
  */
+"use strict"
 
 const app = new (require('koa'))
 const config = require('./configs/main')
@@ -25,4 +26,3 @@ app.on('error', (err, ctx)=> {
 process.on('unhandledRejection', function (err) {
     log.getLogger().warn("unhandledRejectionLogs:" + err.stack)
 })
-
