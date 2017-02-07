@@ -20,6 +20,10 @@
       "env_dev": {
         "NODE_ENV": "development",
         "PORT": "8001"
+      },
+      "env_test": {
+        "NODE_ENV": "test",
+        "PORT": "8002"
       }
     }
   ]

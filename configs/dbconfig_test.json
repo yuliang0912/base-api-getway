@@ -1,10 +1,10 @@
 {
   "apiGetway": {
-    "username": "root",
-    "password": "ciwong",
+    "username": "ciwong_sabin",
+    "password": "ciwong2017",
     "database": "cw_api_gateway",
     "config": {
-      "host": "192.168.2.107",
+      "host": "192.168.2.117",
       "port": 3306,
       "dialect": "mysql",
       "timezone": "+08:00",
@@ -16,11 +16,11 @@
     }
   },
   "userInfo": {
-    "username": "root",
-    "password": "root",
+    "username": "ciwong_sabin",
+    "password": "ciwong2017",
     "database": "user_info",
     "config": {
-      "host": "192.168.1.64",
+      "host": "192.168.2.117",
       "port": 3306,
       "dialect": "mysql",
       "timezone": "+08:00",

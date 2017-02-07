@@ -6,9 +6,12 @@
 
 const mysql = require('mysql2/promise')
 
-const dbConfig = process.env.NODE_ENV === 'production'
-    ? require('./../configs/dbconfig_production.json')
-    : require('./../configs/dbconfig_development.json')
+const dbConfig =
+    process.env.NODE_ENV === 'production'
+        ? require('./../configs/dbconfig_production.json')
+        : process.env.NODE_ENV === 'test'
+        ? require('./../configs/dbconfig_test.json')
+        : require('./../configs/dbconfig_development.json')
 
 var userInfoPool = mysql.createPool({
     host: dbConfig.userInfo.config.host,

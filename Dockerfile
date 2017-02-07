@@ -22,4 +22,4 @@ ENV NODE_ENV development
 
 EXPOSE 8000
 
-ENTRYPOINT pm2 start pm2.json --no-daemon --env development
+ENTRYPOINT pm2 start pm2.json --no-daemon --env test

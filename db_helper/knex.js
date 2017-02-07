@@ -7,9 +7,12 @@
 const kenx = require('knex')
 const log = require('../libs/log4').db
 
-const dbConfig = process.env.NODE_ENV === 'production'
-    ? require('./../configs/dbconfig_production.json')
-    : require('./../configs/dbconfig_development.json')
+const dbConfig =
+    process.env.NODE_ENV === 'production'
+        ? require('./../configs/dbconfig_production.json')
+        : process.env.NODE_ENV === 'test'
+        ? require('./../configs/dbconfig_test.json')
+        : require('./../configs/dbconfig_development.json')
 
 const apiGetway = kenx({
     client: 'mysql2',
