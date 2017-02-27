@@ -15,10 +15,11 @@ module.exports = co.wrap(function *() {
         headers: this.headers || {},
         json: false,
         gzip: false, //无需解压响应的内容
-        timeout: 30000,
+        timeout: 30000, //默认30秒
         encoding: null
     }
 
+    //设置HOST,不然代理网页的时候无法正常加载
     options.headers.host = this.authorize.proxyRoute.redirectHost
 
     if (["GET", "HEAD", "DELETE"].indexOf(this.method.toUpperCase()) === -1) {
@@ -32,6 +33,9 @@ module.exports = co.wrap(function *() {
         else if (!apiUtil.isEmptyObject(this.request.body)) {
             options.body = this.request.body
         }
+        else if (this.is('multipart') && this.req.readable) {
+            options.timeout = 180000; //文件流超时设置为3分钟
+        }
     }
 
     //body经过处理之后长度可能发生变化,删除此属性防止服务器一直等待接收数据
@@ -43,6 +47,11 @@ module.exports = co.wrap(function *() {
         options.headers.Authorization = "Basic " + new Buffer(this.authorize.tokenInfo.userId + ":1").toString("base64")
     } else if (this.authorize.userId) {
         options.headers.Authorization = "Basic " + new Buffer(this.authorize.userId + ":1").toString("base64")
+    }
+
+    //向下传递clientInfo
+    if (this.authorize.clientInfo) {
+        options.headers["client-id"] = this.authorize.clientInfo.clientId
     }
 
     yield new Promise((resolve, reject) => {

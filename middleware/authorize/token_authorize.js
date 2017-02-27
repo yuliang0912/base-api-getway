@@ -17,13 +17,11 @@ module.exports = co.wrap(function*(accessToken, clientId) {
 
     if (!token || token.clientId !== clientId) {
         this.trackLog("token认证失败")
-        this.status = 302
         this.error('未找到有效token', apiCode.errCodeEnum.accessTokenError, apiCode.retCodeEnum.oauthError)
     }
 
     if (token.expireDate < moment().format("X")) {
         this.trackLog("token认证失败,已过期")
-        this.status = 302
         this.error("token已过期", apiCode.errCodeEnum.accessTokenTimeOutError, apiCode.retCodeEnum.oauthError)
     }
 

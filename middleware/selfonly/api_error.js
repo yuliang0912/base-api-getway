@@ -9,6 +9,11 @@ const apiCode = require('./../../libs/api_code_enum')
 const log = require('../../libs/log4').koa
 
 module.exports = function (app) {
+
+    app.on('error', (err, ctx)=> {
+        log.getLogger().fatal("app-on-error事件:" + err.toString() + "ctx.request:" + JSON.stringify(ctx.request))
+    })
+
     return co.wrap(function *(ctx, next) {
         try {
             yield next()
@@ -22,3 +27,11 @@ module.exports = function (app) {
         }
     })
 }
+
+process.once('unhandledRejection', function (err) {
+    log.getLogger().warn("process-on-unhandledRejection事件:" + err.stack)
+})
+
+process.on('uncaughtException', function (err) {
+    log.getLogger().fatal("process-on-uncaughtException事件:" + err.stack)
+})

@@ -41,7 +41,7 @@ Redis.prototype.getBuiltinCommands().forEach(command=> {
             return Promise.reject(new Error("redis服务未打开"))
         }
         var args = Array.from(arguments)
-        return server[command](args).timeout(30000).catch(Promise.TimeoutError, ()=> {
+        return server[command].apply(this, args).timeout(30000).catch(Promise.TimeoutError, ()=> {
             throw new Error("redis连接已超时")
         }).catch(err=> {
             log.getLogger().warn("=========redis应用错误:begin==============")

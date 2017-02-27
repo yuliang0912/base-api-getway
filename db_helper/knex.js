@@ -49,10 +49,35 @@ const userInfo = kenx({
     debug: false // process.env.NODE_ENV !== 'production'
 })
 
+const gwSms = kenx({
+    client: 'mysql2',
+    connection: {
+        host: dbConfig.gwSms.config.host,
+        user: dbConfig.gwSms.username,
+        password: dbConfig.gwSms.password,
+        database: dbConfig.gwSms.database,
+        charset: 'utf8'
+    },
+    pool: {
+        min: dbConfig.gwSms.config.minConnections,
+        max: dbConfig.gwSms.config.maxConnections,
+    },
+    acquireConnectionTimeout: dbConfig.gwSms.config.maxIdleTime,
+    debug: false // process.env.NODE_ENV !== 'production'
+})
+
 module.exports = {
     apiGetway: apiGetway,
-    userInfo: userInfo
+    userInfo: userInfo,
+    gwSms: gwSms
 }
+
+gwSms.on('query-error', function (error, obj) {
+    log.getLogger().error("===========knex:gwSms error begin===============")
+    log.getLogger().error(error.toString())
+    log.getLogger().error(JSON.stringify(obj))
+    log.getLogger().error("===========end===============")
+})
 
 userInfo.on('query-error', function (error, obj) {
     log.getLogger().error("===========knex:userInfo error begin===============")

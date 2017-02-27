@@ -7,5 +7,12 @@
 const koaBody = require('koa-body')
 
 module.exports = function (app) {
-    return koaBody({multipart: false})
+    var options = {
+        jsonLimit: "1mb",
+        formLimit: "256kb",
+        textLimit: "256kb",
+        encoding: "utf-8",
+        multipart: false
+    }
+    return koaBody(options)
 }

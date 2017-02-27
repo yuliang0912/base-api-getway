@@ -5,7 +5,9 @@
 "use strict"
 
 const retCodeEnum = {
-    //常结果
+    //服务器维护中
+    "serverMaintain": -10,
+    //正常结果
     "success": 0,
     //程序内部错误
     "serverError": 1,
@@ -13,8 +15,10 @@ const retCodeEnum = {
     "authenticationFailure": 2,
     //token认证相关错误
     "oauthError": 3,
+    //刷新token相关错误
+    "refreshTokenError": 4,
     //代理相关错误
-    "agentError": 4
+    "agentError": 5,
 };
 
 const errCodeEnum = {
@@ -58,6 +62,11 @@ const errCodeEnum = {
     "originalServerError": 26,
     //token过期
     "accessTokenTimeOutError": 27,
+    //token认证中手机号码验证错误
+    "accessTokenMobileError": 28,
+    //用户ID或密码验证错误
+    "userIdOrPwdError": 29,
+    //程序其他异常
     "apiError": 100
 };
 

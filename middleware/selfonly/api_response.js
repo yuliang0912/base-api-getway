@@ -18,16 +18,13 @@ function buildReturnObject(ret, errCode, msg, data) {
     if (_.isNumber(errCode)) {
         result.errcode = parseInt(errCode);
     }
-
     result.msg = msg
     if (msg === undefined) {
         result.msg = "success"
     }
-
     if (!Object.is(data, undefined)) {
         result.data = data;
     }
-
     return result;
 }
 
@@ -125,7 +122,7 @@ module.exports = function (app) {
                 e = new Error("未定义的错误")
             }
             else if (e.fatal && e.code && e.errno) { //knex相关错误
-                logs.db.getLogger().fatal(e.toString())
+                logs.db.getLogger().fatal("api-response-catch错误:" + e.toString())
             }
             if (e.retCode === undefined) {
                 e.retCode = apiCode.retCodeEnum.serverError

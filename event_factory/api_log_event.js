@@ -8,5 +8,5 @@ const Events = require('events');
 
 
 module.exports = function () {
-    Events.EventEmitter.call(this);
+
 }

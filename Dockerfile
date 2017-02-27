@@ -18,8 +18,8 @@ COPY . /opt/apt-getway/
 #ENV
 #VOLUME ['/opt/logs','/opt/logs/db','/opt/logs/koa','/opt/logs/track']
 
-ENV NODE_ENV development
+#ENV NODE_ENV test
 
-EXPOSE 8002
+EXPOSE 8895
 
 ENTRYPOINT pm2 start pm2.json --no-daemon --env test

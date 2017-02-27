@@ -80,5 +80,4 @@ function test_des(param) {
 //     }
 //     console.log(hash.toByteArray());
 //     hash = new Buffer(hash).toString('hex');
-//
 // })
