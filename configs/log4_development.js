@@ -41,6 +41,14 @@ var category = {
             pattern: "log-yyyy-MM-dd" + pm2WorkId + ".log",
             category: "track",
             level: "all"
+        },
+        {
+            type: "dateFile",
+            filename: "logs/login/",
+            alwaysIncludePattern: true,
+            pattern: "log-yyyy-MM-dd" + pm2WorkId + ".log",
+            category: "login",
+            level: "all"
         }]
 };
 
