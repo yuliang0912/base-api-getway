@@ -36,7 +36,7 @@ module.exports = {
 
         var smsUserInfo = yield smsService.getUser(condition)
         if (!smsUserInfo && condition.mobile) {
-            this.error('当前手机号尚未绑定', apiCode.errCodeEnum.accessTokenMobileError, apiCode.retCodeEnum.oauthError)
+            this.error('手机号码未注册', apiCode.errCodeEnum.accessTokenMobileError, apiCode.retCodeEnum.oauthError)
         } else if (smsUserInfo) {
             userName = smsUserInfo.user_id
             userMobile = smsUserInfo.mobile
