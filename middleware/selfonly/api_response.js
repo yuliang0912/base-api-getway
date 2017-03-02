@@ -130,7 +130,7 @@ module.exports = function (app) {
             if (e.errCode === undefined) {
                 e.errCode = apiCode.errCodeEnum.autoSnapError
             }
-            ctx.body = buildReturnObject(e.retCode, e.errCode, e.toString());
+            ctx.body = buildReturnObject(e.retCode, e.errCode, e.message || e.toString());
 
             ISTRACK && ctx.trackLog("出现异常错误:" + e.toString())
             ISTRACK && ctx.trackLog("====end:结束本次请求跟踪====")
