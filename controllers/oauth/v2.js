@@ -11,6 +11,8 @@ const userService = require('../../middleware/service/user_info_service')
 const smsService = require('../../middleware/service/cw_gw_sms_service')
 const hamcSign = require('../../middleware/channel/hmac')
 const apiCode = require('../../libs/api_code_enum')
+const log = require('../../libs/log4')
+const logger4login = log.getLogs('login')
 
 module.exports = {
     noAuths: [],
@@ -56,6 +58,9 @@ module.exports = {
         if (!clientInfo || clientInfo.status !== 0) {
             this.error('clientId错误或client status异常', apiCode.errCodeEnum.clientError, apiCode.retCodeEnum.oauthError)
         }
+
+        // 用户登录成功 记录 clientId, brandId, appVersionId, uid,手机号，姓名，手机类型，手机型号
+        logger4login.info(`${clientId}|${brandId}|${appVersionId}|${userInfo.UserID}|${userInfo.mobile}|${userInfo.RealName}|${phoneVersion}|${osVersion}`)
 
         //获取token
         var userToken = yield tokenService.getTokenByUserId(clientInfo.groupId, userName)
