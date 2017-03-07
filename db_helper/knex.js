@@ -24,10 +24,10 @@ const apiGetway = kenx({
         charset: 'utf8'
     },
     pool: {
-        min: dbConfig.apiGetway.config.minConnections,
-        max: dbConfig.apiGetway.config.maxConnections,
+        min: dbConfig.apiGetway.config.pool.minConnections,
+        max: dbConfig.apiGetway.config.pool.maxConnections,
     },
-    acquireConnectionTimeout: dbConfig.apiGetway.config.maxIdleTime,
+    acquireConnectionTimeout: dbConfig.apiGetway.config.pool.maxIdleTime,
     debug: false // process.env.NODE_ENV !== 'production'
 })
 
@@ -45,7 +45,7 @@ const userInfo = kenx({
         min: dbConfig.userInfo.config.minConnections,
         max: dbConfig.userInfo.config.maxConnections,
     },
-    acquireConnectionTimeout: dbConfig.userInfo.config.maxIdleTime,
+    acquireConnectionTimeout: dbConfig.userInfo.config.pool.maxIdleTime,
     debug: false // process.env.NODE_ENV !== 'production'
 })
 
@@ -59,10 +59,10 @@ const gwSms = kenx({
         charset: 'utf8'
     },
     pool: {
-        min: dbConfig.gwSms.config.minConnections,
-        max: dbConfig.gwSms.config.maxConnections,
+        min: dbConfig.gwSms.config.pool.minConnections,
+        max: dbConfig.gwSms.config.pool.maxConnections,
     },
-    acquireConnectionTimeout: dbConfig.gwSms.config.maxIdleTime,
+    acquireConnectionTimeout: dbConfig.gwSms.config.pool.maxIdleTime,
     debug: false // process.env.NODE_ENV !== 'production'
 })
 

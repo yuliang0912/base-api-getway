@@ -22,6 +22,10 @@ module.exports = co.wrap(function *(ctx, next) {
         yield Promise.all(currApiCom)
     }
 
+    //如果允许跨域请求,则打开注释.以后可以动态配置
+    //ctx.set("Access-Control-Allow-Origin", "*")
+    //ctx.set("Access-Control-Allow-Methods","GET")
+
     var ms = Date.now()
     yield proxyService.call(ctx)
     ctx.set("Original-Agent-Time", (Date.now() - ms))
