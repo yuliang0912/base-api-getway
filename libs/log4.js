@@ -33,10 +33,10 @@ config.category.appenders.forEach(item=> {
 })
 
 module.exports.getLogs = function (name) {
-    if (!name || !module.exports[item.category]) {
+    if (!name || !module.exports[name]) {
         throw new Error('没有找到指定的日志模块' + name);
     }
-    return module.exports[item.category].getLogger()
+    return module.exports[name].getLogger()
 }
 
 
