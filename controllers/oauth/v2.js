@@ -36,7 +36,7 @@ module.exports = {
 
         var smsUserInfo = yield smsService.getUser(condition)
         if (!smsUserInfo && condition.mobile) {
-            this.error('手机号码未注册', apiCode.errCodeEnum.accessTokenMobileError, apiCode.retCodeEnum.oauthError)
+            this.error('用户名或者密码错误', apiCode.errCodeEnum.accessTokenMobileError, apiCode.retCodeEnum.oauthError)
         } else if (smsUserInfo) {
             userName = smsUserInfo.user_id
             userMobile = smsUserInfo.mobile
@@ -44,7 +44,7 @@ module.exports = {
 
         var userInfo = yield userService.getUserInfo({userId: userName})
         if (!userInfo) {
-            this.error('用户名或者密码不匹配', apiCode.errCodeEnum.userIdOrPwdError, apiCode.retCodeEnum.oauthError)
+            this.error('用户名或者密码错误', apiCode.errCodeEnum.userIdOrPwdError, apiCode.retCodeEnum.oauthError)
         }
 
         //此处验证passWord
