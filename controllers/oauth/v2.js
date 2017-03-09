@@ -49,7 +49,7 @@ module.exports = {
 
         //此处验证passWord
         if (userInfo.PassWord !== apiUtils.crypto.sha512(passWord + userInfo.SaltValue).toUpperCase()) {
-            this.error('用户名或者密码不匹配', apiCode.errCodeEnum.userIdOrPwdError, apiCode.retCodeEnum.oauthError)
+            this.error('用户名或者密码错误', apiCode.errCodeEnum.userIdOrPwdError, apiCode.retCodeEnum.oauthError)
         }
         userInfo.mobile = userMobile
 
