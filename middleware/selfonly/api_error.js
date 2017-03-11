@@ -11,6 +11,7 @@ const log = require('../../libs/log4').koa
 module.exports = function (app) {
 
     app.on('error', (err, ctx)=> {
+        console.log("app-on-error事件:" + err.toString())
         log.getLogger().fatal("app-on-error事件:" + err.toString() + "ctx.request:" + JSON.stringify(ctx.request))
     })
 
