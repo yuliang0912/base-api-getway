@@ -19,12 +19,16 @@ module.exports = {
     token: function *() {
         var clientId = this.checkQuery("clientId").toInt().value;
         var brandId = this.checkQuery("brandId").toInt().value;
-        var userName = this.checkQuery("userName").isNumeric().value;
+        var userName = this.checkQuery("userName").notEmpty().value;
         var passWord = this.checkQuery("passWord").notEmpty().value;
         var appVersionId = this.checkQuery("appVersionId").default('').value;
         var phoneVersion = this.checkQuery("phoneVersion").default('').value;
         var osVersion = this.checkQuery("osVersion").default('').value;
         this.errors && this.validateError()
+
+        if (!/^\d{5,}$/.test(userName)) {
+            this.error('账号或密码错误', apiCode.errCodeEnum.userIdOrPwdError, apiCode.retCodeEnum.oauthError)
+        }
 
         var userMobile = ""
         var condition = {business_id: brandId}
@@ -33,6 +37,8 @@ module.exports = {
         } else {
             condition.user_id = userName
         }
+
+
 
         var smsUserInfo = yield smsService.getUser(condition)
         if (!smsUserInfo && condition.mobile) {
