@@ -67,5 +67,10 @@ module.exports = co.wrap(function *(ctx) {
 
     ctx.trackLog("自动匹配路由成功")
 
+    //暂时允许跨域请求
+    ctx.set("Access-Control-Allow-Origin", "*")
+    ctx.set("Access-Control-Allow-Credentials", "true")
+    ctx.set("Access-Control-Allow-Methods", "*")
+
     yield action.call(ctx)
 })

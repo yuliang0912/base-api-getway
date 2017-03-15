@@ -12,6 +12,13 @@ const proxyService = require('./proxy/request')
 const routeAuthorize = require('./authorize/route_proxy_authorize')
 
 module.exports = co.wrap(function *(ctx, next) {
+
+    //暂时允许跨域请求
+    ctx.set("Access-Control-Allow-Origin", "*")
+    ctx.set("Access-Control-Allow-Credentials", "true")
+    ctx.set("Access-Control-Allow-Methods", "*")
+
+
     ctx.trackLog("进入代理主流程")
     yield routeAuthorize.call(ctx)
 
@@ -21,10 +28,6 @@ module.exports = co.wrap(function *(ctx, next) {
         })
         yield Promise.all(currApiCom)
     }
-
-    //如果允许跨域请求,则打开注释.以后可以动态配置
-    //ctx.set("Access-Control-Allow-Origin", "*")
-    //ctx.set("Access-Control-Allow-Methods","GET")
 
     var ms = Date.now()
     yield proxyService.call(ctx)

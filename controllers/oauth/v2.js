@@ -38,8 +38,6 @@ module.exports = {
             condition.user_id = userName
         }
 
-
-
         var smsUserInfo = yield smsService.getUser(condition)
         if (!smsUserInfo && condition.mobile) {
             this.error('账号或密码错误', apiCode.errCodeEnum.accessTokenMobileError, apiCode.retCodeEnum.oauthError)
