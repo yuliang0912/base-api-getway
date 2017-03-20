@@ -15,6 +15,11 @@ module.exports = {
         var userId = this.checkQuery("username").notEmpty().value;
         var passWord = this.checkQuery("password").notEmpty().value;
         this.errors && this.validateError()
+
+        if (clientId === 20002) {
+            this.error('请升级客户端版本', 10004, 0)
+        }
+
         var userInfo = yield userService.getUserInfo({userId})
         if (!userInfo) {
             this.error('用户名和密码不匹配', 10004, 0)
