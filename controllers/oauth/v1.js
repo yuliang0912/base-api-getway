@@ -16,7 +16,8 @@ module.exports = {
         var passWord = this.checkQuery("password").notEmpty().value;
         this.errors && this.validateError()
 
-        if (clientId === 20002) {
+        var prohibitLoginBrandIds = [100062, 100026, 100037, 100046]
+        if (prohibitLoginBrandIds.some(t=>t === clientId)) {
             this.error('请升级客户端版本', 10004, 0)
         }
 
