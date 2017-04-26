@@ -1,15 +1,15 @@
 {
   "apiGetway": {
-    "username": "ciwong_sabin",
-    "password": "dianzibao2015",
+    "username": "apps",
+    "password": "apps_sabin@2017",
     "database": "cw_api_gateway",
     "config": {
-      "host": "rdsji4782vw39828axxz.mysql.rds.aliyuncs.com",
+      "host": "rm-2ze0qk421h84k72ii.mysql.rds.aliyuncs.com",
       "port": 3306,
       "dialect": "mysql",
       "timezone": "+08:00",
       "pool": {
-        "maxConnections": 300,
+        "maxConnections": 50,
         "minConnections": 2,
         "maxIdleTime": 10000
       }
@@ -25,7 +25,7 @@
       "dialect": "mysql",
       "timezone": "+08:00",
       "pool": {
-        "maxConnections": 300,
+        "maxConnections": 50,
         "minConnections": 2,
         "maxIdleTime": 10000
       }
@@ -41,7 +41,7 @@
       "dialect": "mysql",
       "timezone": "+08:00",
       "pool": {
-        "maxConnections": 100,
+        "maxConnections": 50,
         "minConnections": 1,
         "maxIdleTime": 10000
       }
