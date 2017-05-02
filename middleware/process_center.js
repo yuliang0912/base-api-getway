@@ -18,7 +18,6 @@ module.exports = co.wrap(function *(ctx, next) {
     ctx.set("Access-Control-Allow-Credentials", "true")
     ctx.set("Access-Control-Allow-Methods", "*")
 
-
     ctx.trackLog("进入代理主流程")
     yield routeAuthorize.call(ctx)
 

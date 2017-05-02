@@ -66,6 +66,8 @@ const errCodeEnum = {
     "accessTokenMobileError": 28,
     //用户ID或密码验证错误
     "userIdOrPwdError": 29,
+    //客户端授权模式错误
+    "clientCredentialsError": 30,
     //程序其他异常
     "apiError": 100
 };
