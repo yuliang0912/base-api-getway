@@ -28,7 +28,7 @@ module.exports.main = co.wrap(function *() {
             var timeLine = this.checkHeader("timeline").notEmpty().toInt().value
             var sign = this.checkHeader("sign").notEmpty().value
             this.errors && this.validateError()
-            if (Math.abs(moment().format('X') - timeLine) > 180) { //允许最大误差值为180秒
+            if (Math.abs(moment().format('X') - timeLine) > 180) { //时间戳允许最大误差值为±180秒
                 this.error("参数timeLine验证失败,请检查服务器时间", apiCodeEnum.errCodeEnum.clientCredentialsError, apiCodeEnum.retCodeEnum.oauthError)
             }
             authorizes.push(clientCredentialsAuthorize.call(this, clientId, timeLine, sign, this.request.url))

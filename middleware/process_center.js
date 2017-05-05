@@ -19,10 +19,11 @@ module.exports = co.wrap(function *(ctx, next) {
     ctx.set("Access-Control-Allow-Methods", "*")
 
     ctx.trackLog("进入代理主流程")
-    yield routeAuthorize.call(ctx)
 
-    if (Array.isArray(ctx.authorize.proxyRoute.config.auth)) {
-        var currApiCom = coms.channelComKeys.filter(t=>ctx.authorize.proxyRoute.config.auth.indexOf(t) > -1).map(com=> {
+    var routeInfo = yield routeAuthorize.call(ctx)
+
+    if (routeInfo && Array.isArray(routeInfo.config.auth)) {
+        var currApiCom = coms.channelComKeys.filter(t=>routeInfo.config.auth.indexOf(t) > -1).map(com=> {
             return coms.channelCom[com].main.call(ctx, ctx)
         })
         yield Promise.all(currApiCom)

@@ -11,7 +11,7 @@ module.exports = function (app) {
         ctx.body = "welcome to cw-api-gateway"
     }))
 
-    //oauth和route模块又自动路由处理
+    //oauth和route模块由自动路由处理
     router.all('/(oauth|route)/*', require('./auto-router'))
 
     //其他模块由代理配置决定
