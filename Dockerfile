@@ -1,25 +1,21 @@
-FROM daocloud.io/node:6.2.1
+FROM daocloud.io/node:8.1.2
 
 MAINTAINER yuliang <yuliang@ciwong.com>
 
-RUN mkdir -p /opt/apt-getway
+RUN mkdir -p /data/apt-gateway
 
-RUN npm install -g pm2
+WORKDIR /data/apt-gateway
 
-WORKDIR /opt/apt-getway
-
-COPY ./package.json /opt/apt-getway/
+COPY . /data/apt-gateway/
 
 RUN npm install
-## RUN npm install && bower install --allow-root
-
-COPY . /opt/apt-getway/
 
 #ENV
 #VOLUME ['/opt/logs','/opt/logs/db','/opt/logs/koa','/opt/logs/track']
 
-#ENV NODE_ENV test
+ENV NODE_ENV production
+ENV PORT 8895
 
 EXPOSE 8895
 
-ENTRYPOINT pm2 start pm2.json --no-daemon --env test
+CMD [ "npm", "start" ]

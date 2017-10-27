@@ -8,7 +8,6 @@ const moment = require('moment')
 const apiUtils = require('../../libs/api_utils')
 const tokenService = require('../../middleware/service/oauth_service')
 const userService = require('../../middleware/service/user_info_service')
-const smsService = require('../../middleware/service/cw_gw_sms_service')
 const hamcSign = require('../../middleware/channel/hmac')
 const apiCode = require('../../libs/api_code_enum')
 const log = require('../../libs/log4')
@@ -36,14 +35,6 @@ module.exports = {
             condition.mobile = userName
         } else {
             condition.user_id = userName
-        }
-
-        var smsUserInfo = yield smsService.getUser(condition)
-        if (!smsUserInfo && condition.mobile) {
-            this.error('账号或密码错误', apiCode.errCodeEnum.accessTokenMobileError, apiCode.retCodeEnum.oauthError)
-        } else if (smsUserInfo) {
-            userName = smsUserInfo.user_id
-            userMobile = smsUserInfo.mobile
         }
 
         var userInfo = yield userService.getUserInfo({userId: userName})

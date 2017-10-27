@@ -23,6 +23,17 @@ utils.crypto = {
     },
     md5: function (text) {
         return crypto.createHash('md5').update(text).digest('hex')
+    },
+    rsaSha256Verify(text, sign, publickKey, digest = "hex") {
+        let verify = crypto.createVerify('RSA-SHA256');
+        verify.update(text)
+        return verify.verify(publickKey, sign, digest);
+    },
+    base64Decode(text) {
+        return new Buffer(text, 'base64').toString()
+    },
+    base64Encode(text){
+        return new Buffer(text).toString("base64")
     }
 }
 
@@ -53,7 +64,7 @@ utils.isNullOrUndefined = function (str) {
 utils.convert = function (model) {
     var type = toString.call(model)
     if (type === '[object Object]') {
-        Object.keys(model).forEach(item=> {
+        Object.keys(model).forEach(item => {
             if (toString.call(model[item]) === '[object Date]') {
                 model[item] = model[item].toUnix()
             }
@@ -112,13 +123,13 @@ String.prototype.trimEnd = function (trimStr) {
 
 Array.prototype.groupBy = function (key) {
     var batchGroup = {};
-    this.forEach(item=> {
+    this.forEach(item => {
         if (!batchGroup[item[key]]) {
             batchGroup[item[key]] = [];
         }
         batchGroup[item[key]].push(item);
     })
-    return Object.keys(batchGroup).map(item=> {
+    return Object.keys(batchGroup).map(item => {
         return {key: item, value: batchGroup[item]}
     });
 }

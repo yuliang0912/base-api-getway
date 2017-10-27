@@ -11,6 +11,5 @@ module.exports.main = co.wrap(function*() {
 
     yield basice64Authorize.call(this)
 
-
     return true
 });

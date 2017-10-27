@@ -1,10 +1,10 @@
 {
   "apiGetway": {
     "username": "root",
-    "password": "root",
-    "database": "cw_api_getway",
+    "password": "yuliang@@",
+    "database": "cw_api_gateway",
     "config": {
-      "host": "192.168.1.64",
+      "host": "127.0.0.1",
       "port": 3306,
       "dialect": "mysql",
       "timezone": "+08:00",
@@ -17,26 +17,10 @@
   },
   "userInfo": {
     "username": "root",
-    "password": "root",
+    "password": "yuliang@@",
     "database": "user_info",
     "config": {
-      "host": "192.168.1.64",
-      "port": 3306,
-      "dialect": "mysql",
-      "timezone": "+08:00",
-      "pool": {
-        "maxConnections": 2000,
-        "minConnections": 3,
-        "maxIdleTime": 10000
-      }
-    }
-  },
-  "gwSms": {
-    "username": "root",
-    "password": "root",
-    "database": "cw_gw_sms",
-    "config": {
-      "host": "192.168.1.64",
+      "host": "127.0.0.1",
       "port": 3306,
       "dialect": "mysql",
       "timezone": "+08:00",

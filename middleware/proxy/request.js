@@ -19,6 +19,7 @@ module.exports = co.wrap(function *() {
         encoding: null
     }
 
+
     //设置HOST,不然代理网页的时候无法正常加载
     options.headers.host = this.authorize.proxyRoute.redirectHost
 
@@ -41,17 +42,35 @@ module.exports = co.wrap(function *() {
     //body经过处理之后长度可能发生变化,删除此属性防止服务器一直等待接收数据
     delete options.headers['content-length']
     //干掉请求中的if-modified-since字段，以防命中服务端缓存，返回304
-    delete options.headers['if-modified-since']
+    //delete options.headers['if-modified-since']
 
+    //删除代理服务器授权需要的header-key,防止伪造
+    //delete options.headers['auth-token']
+
+
+    let userToken = null
     if (this.authorize.tokenInfo) {
-        options.headers.Authorization = "Basic " + new Buffer(this.authorize.tokenInfo.userId + ":1").toString("base64")
+        userToken = {
+            info: this.authorize.tokenInfo,
+            type: "oauthToken"
+        }
     } else if (this.authorize.userId) {
-        options.headers.Authorization = "Basic " + new Buffer(this.authorize.userId + ":1").toString("base64")
+        userToken = {
+            info: this.authorize.userId,
+            type: "basice"
+        }
+    } else if (this.authorize.jwtInfo) {
+        userToken = {
+            info: this.authorize.jwtInfo,
+            type: 'jwt'
+        }
+        if (this.cookies.get('authInfo')) {
+            options.headers["authorization"] = `Bearer ${this.cookies.get('authInfo')}`
+        }
     }
 
-    //向下传递clientInfo
-    if (this.authorize.clientInfo) {
-        options.headers["client-id"] = this.authorize.clientInfo.clientId
+    if (userToken) {
+        options.headers["auth-token"] = apiUtil.crypto.base64Encode(JSON.stringify(userToken))
     }
 
     yield new Promise((resolve, reject) => {
@@ -60,19 +79,19 @@ module.exports = co.wrap(function *() {
                 : /^[2|3]/.test(response.statusCode)
                 ? resolve(response)
                 : reject(Object.assign(new Error(response.body), {
-                code: "httpStatusCodeError",
-                statusCode: response.statusCode || "NULL"
-            }))
+                    code: "httpStatusCodeError",
+                    statusCode: response.statusCode || "NULL"
+                }))
         })
         if (this.req.readable && ["GET", "HEAD", "DELETE"].indexOf(this.method.toUpperCase()) === -1) {
             this.req.pipe(ProxyServer)
         }
-    }).then(response=> {
-        Object.keys(response.headers).forEach(header=> {
+    }).then(response => {
+        Object.keys(response.headers).forEach(header => {
             this.set(header, response.headers[header])
         })
         this.body = response.body
-    }).catch(err=> {
+    }).catch(err => {
         var msg = "服务器错误"
         switch (err.code) {
             case "ETIMEDOU":

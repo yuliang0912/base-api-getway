@@ -12,11 +12,12 @@ const channelComMapping = {
     hmacSign: "hmac",
     whiteList: "white_list",
     blackList: "black_list",
+    jwt: "jwt"
 }
 
 var channelComKeys = Object.keys(channelComMapping)
 
-Object.keys(channelComMapping).forEach(item=> {
+Object.keys(channelComMapping).forEach(item => {
     channelCom[item] = require('./channel/' + channelComMapping[item])
 })
 

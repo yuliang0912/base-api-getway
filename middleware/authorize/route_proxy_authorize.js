@@ -51,8 +51,6 @@ module.exports = co.wrap(function *() {
 
     this.trackLog("路由config:" + route.config)
 
-    route.config = JSON.parse(route.config);
-
     this.authorize.proxyRoute = route
     this.authorize.proxyUrl = parseUrl(route, this.url)
     this.trackLog("路由验证成功,路由URL:" + this.authorize.proxyUrl)

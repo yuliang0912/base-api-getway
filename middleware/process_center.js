@@ -29,6 +29,7 @@ module.exports = co.wrap(function *(ctx, next) {
         yield Promise.all(currApiCom)
     }
 
+
     var ms = Date.now()
     yield proxyService.call(ctx)
     ctx.set("Original-Agent-Time", (Date.now() - ms))

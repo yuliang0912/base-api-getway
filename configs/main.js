@@ -2,7 +2,7 @@
 var path = require('path')
 
 var env = process.env.NODE_ENV || 'development';
-var port = process.env.PORT || 1201;
+var port = process.env.PORT || 1201
 
 var host = 'http://localhost' + (port != 80 ? ':' + port : '');
 

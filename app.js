@@ -15,6 +15,6 @@ app.use(require('./middleware/selfonly/koa_bodyparse')(app))
 require('koa-validate')(app)
 require('./router/index')(app)
 
-app.listen(config.port, ()=> {
-    console.log('Server running on port:%s', config.port)
+app.listen(config.port, () => {
+    console.log('Server running on port:%s env:%s', config.port, process.env.NODE_ENV || 'development')
 })

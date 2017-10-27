@@ -1,10 +1,10 @@
 {
   "apiGetway": {
-    "username": "apps",
-    "password": "apps_sabin@2017",
+    "username": "root",
+    "password": "yuliang@@",
     "database": "cw_api_gateway",
     "config": {
-      "host": "rm-2ze0qk421h84k72ii.mysql.rds.aliyuncs.com",
+      "host": "192.168.0.3",
       "port": 3306,
       "dialect": "mysql",
       "timezone": "+08:00",
@@ -16,33 +16,21 @@
     }
   },
   "userInfo": {
-    "username": "ciwong_sabin",
-    "password": "dianzibao2015",
-    "database": "db_userinfo",
+    "username": "root",
+    "password": "yuliang@@",
+    "database": "user_info",
     "config": {
-      "host": "rdsji4782vw39828axxz.mysql.rds.aliyuncs.com",
+      "host": "192.168.0.3",
       "port": 3306,
       "dialect": "mysql",
       "timezone": "+08:00",
+      "bigNumberStrings": true,
+      "supportBigNumbers": true,
+      "dateStrings": true,
+      "connectTimeout": 10000,
       "pool": {
         "maxConnections": 50,
         "minConnections": 2,
-        "maxIdleTime": 10000
-      }
-    }
-  },
-  "gwSms": {
-    "username": "ciwong_sabin",
-    "password": "dianzibao2015",
-    "database": "cw_epaper_msg",
-    "config": {
-      "host": "rdsji4782vw39828axxz.mysql.rds.aliyuncs.com",
-      "port": 3306,
-      "dialect": "mysql",
-      "timezone": "+08:00",
-      "pool": {
-        "maxConnections": 50,
-        "minConnections": 1,
         "maxIdleTime": 10000
       }
     }
