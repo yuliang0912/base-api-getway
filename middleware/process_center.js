@@ -16,14 +16,15 @@ module.exports = co.wrap(function *(ctx, next) {
     //暂时允许跨域请求
     ctx.set("Access-Control-Allow-Origin", "*")
     ctx.set("Access-Control-Allow-Credentials", "true")
-    ctx.set("Access-Control-Allow-Methods", "*")
+    // ctx.set("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS")
+    // ctx.set("Access-Control-Allow-Headers", "authorization,x-requested-with,content-type")
 
     ctx.trackLog("进入代理主流程")
 
     var routeInfo = yield routeAuthorize.call(ctx)
 
     if (routeInfo && Array.isArray(routeInfo.config.auth)) {
-        var currApiCom = coms.channelComKeys.filter(t=>routeInfo.config.auth.indexOf(t) > -1).map(com=> {
+        var currApiCom = coms.channelComKeys.filter(t => routeInfo.config.auth.indexOf(t) > -1).map(com => {
             return coms.channelCom[com].main.call(ctx, ctx)
         })
         yield Promise.all(currApiCom)

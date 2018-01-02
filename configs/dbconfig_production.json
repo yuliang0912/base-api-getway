@@ -1,10 +1,10 @@
 {
   "apiGetway": {
-    "username": "root",
-    "password": "yuliang@@",
-    "database": "cw_api_gateway",
+    "username": "freelog",
+    "password": "Ff@233109",
+    "database": "fr_api_gateway",
     "config": {
-      "host": "192.168.0.3",
+      "host": "rm-wz9wj9435a0428942.mysql.rds.aliyuncs.com",
       "port": 3306,
       "dialect": "mysql",
       "timezone": "+08:00",
@@ -16,17 +16,16 @@
     }
   },
   "userInfo": {
-    "username": "root",
-    "password": "yuliang@@",
-    "database": "user_info",
+    "username": "freelog",
+    "password": "Ff@233109",
+    "database": "fr_user_info",
     "config": {
-      "host": "192.168.0.3",
+      "host": "rm-wz9wj9435a0428942.mysql.rds.aliyuncs.com",
       "port": 3306,
       "dialect": "mysql",
       "timezone": "+08:00",
       "bigNumberStrings": true,
       "supportBigNumbers": true,
-      "dateStrings": true,
       "connectTimeout": 10000,
       "pool": {
         "maxConnections": 50,

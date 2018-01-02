@@ -8,7 +8,7 @@ const koaLog = require('../../libs/log4').koa
 const apiUtil = require('../../libs/api_utils')
 const apiCode = require('../../libs/api_code_enum')
 
-module.exports = co.wrap(function *() {
+module.exports = co.wrap(function* () {
     var options = {
         method: this.req.method,
         uri: this.authorize.proxyUrl,
@@ -18,7 +18,6 @@ module.exports = co.wrap(function *() {
         timeout: 30000, //默认30秒
         encoding: null
     }
-
 
     //设置HOST,不然代理网页的时候无法正常加载
     options.headers.host = this.authorize.proxyRoute.redirectHost
@@ -66,6 +65,12 @@ module.exports = co.wrap(function *() {
         }
         if (this.cookies.get('authInfo')) {
             options.headers["authorization"] = `Bearer ${this.cookies.get('authInfo')}`
+        }
+    }
+    else if (this.authorize.clientTokenInfo) {
+        userToken = {
+            info: this.authorize.clientTokenInfo,
+            type: this.authorize.clientTokenInfo.tokenType
         }
     }
 

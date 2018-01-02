@@ -8,7 +8,7 @@ const co = require('co')
 const apiUtils = require('../../libs/api_utils')
 const apiCode = require('../../libs/api_code_enum')
 
-module.exports = co.wrap(function *(content, key, sign) {
+module.exports = co.wrap(function* (content, key, sign) {
     this.trackLog("开始进行hmacSign认证")
     this.authorize.flow.push('hmacSign')
 

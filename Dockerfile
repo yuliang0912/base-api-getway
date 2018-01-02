@@ -1,6 +1,6 @@
-FROM daocloud.io/node:8.1.2
+FROM daocloud.io/node:8.5
 
-MAINTAINER yuliang <yuliang@ciwong.com>
+MAINTAINER yuliang <yu.liang@freelog.com>
 
 RUN mkdir -p /data/apt-gateway
 
@@ -11,7 +11,7 @@ COPY . /data/apt-gateway/
 RUN npm install
 
 #ENV
-#VOLUME ['/opt/logs','/opt/logs/db','/opt/logs/koa','/opt/logs/track']
+VOLUME ['/opt/logs']
 
 ENV NODE_ENV production
 ENV PORT 8895
