@@ -4,7 +4,7 @@
     "password": "Ff@233109",
     "database": "fr_api_gateway",
     "config": {
-      "host": "rm-wz9wj9435a04289421o.mysql.rds.aliyuncs.com",
+      "host": "rm-wz9wj9435a0428942.mysql.rds.aliyuncs.com",
       "port": 3306,
       "dialect": "mysql",
       "timezone": "+08:00",
