@@ -8,7 +8,7 @@ const co = require('co')
 const apiUtils = require('../../libs/api_utils')
 const apiCode = require('../../libs/api_code_enum')
 
-module.exports = co.wrap(function *(content, sign) {
+module.exports = co.wrap(function* (content, sign) {
     this.trackLog("开始进行md5Sign认证")
     this.authorize.flow.push('md5Sign')
 

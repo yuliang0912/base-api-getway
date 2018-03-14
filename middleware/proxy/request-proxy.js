@@ -8,7 +8,7 @@ const request = require('request-promise')
 const apiCode = require('../../libs/api_code_enum')
 const koaLog = require('../../libs/log4').koa
 
-module.exports = co.wrap(function *() {
+module.exports = co.wrap(function* () {
     var options = {
         method: this.req.method,
         uri: this.authorize.proxyUrl,
@@ -55,15 +55,15 @@ module.exports = co.wrap(function *() {
         options.headers.Authorization = "Basic " + new Buffer(this.authorize.userId + ":1").toString("base64")
     }
 
-    yield request(options).then(response=> {
-        Object.keys(response.headers).forEach(header=> {
+    yield request(options).then(response => {
+        Object.keys(response.headers).forEach(header => {
             this.set(header, response.headers[header])
         })
         this.body = response.body
-    }).timeout(30000).catch(Promise.TimeoutError, ()=> {
+    }).timeout(30000).catch(Promise.TimeoutError, () => {
         this.trackLog("代理请求已超时")
         this.error("代理请求已超时", apiCode.errCodeEnum.requestTimeoutError, apiCode.retCodeEnum.agentError)
-    }).catch(error=> {
+    }).catch(error => {
         let msg = "源服务器错误"
         let errorInfo = error['error']
         if (error['statusCode']) {

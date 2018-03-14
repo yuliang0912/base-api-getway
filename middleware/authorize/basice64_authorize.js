@@ -8,7 +8,7 @@ const co = require('co')
 const apiCode = require('../../libs/api_code_enum')
 const userPwdAuthorize = require('./user_password_authorize')
 
-module.exports = co.wrap(function*() {
+module.exports = co.wrap(function* () {
 
     this.trackLog("开始进行basice64认证")
 

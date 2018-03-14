@@ -12,7 +12,8 @@ const channelComMapping = {
     hmacSign: "hmac",
     whiteList: "white_list",
     blackList: "black_list",
-    jwt: "jwt"
+    jwt: "jwt",
+    jwtOrNull: 'jwt_or_null'
 }
 
 var channelComKeys = Object.keys(channelComMapping)
