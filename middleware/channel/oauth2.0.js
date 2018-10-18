@@ -15,8 +15,6 @@ module.exports.main = co.wrap(function* () {
     var authorizes = []
     var grantType = this.checkQuery("grantType").default('accesstoken').value
 
-    console.log(111, grantType, this.request.url, this.get('authentication'))
-
     switch (grantType) {
         case 'accesstoken': //accessToken认证模式
             var clientId = this.checkQuery("clientId").notEmpty().toInt().value
