@@ -12,7 +12,7 @@ var genericConfig = {
             category: "console"
         }
     ],
-    replaceConsole: true
+    replaceConsole: false
 }
 
 var category = {
