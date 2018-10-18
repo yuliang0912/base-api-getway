@@ -68,11 +68,11 @@ module.exports = co.wrap(function* () {
     }
     else if (this.authorize.clientTokenInfo) {
         userToken = {
-            info: this.authorize.clientTokenInfo,
-            type: this.authorize.clientTokenInfo.tokenType
+            info: this.authorize.clientTokenInfo.userInfo,
+            type: 'token-client'
         }
+        console.log(this.request.url)
     }
-    console.log(userToken)
     if (userToken) {
         options.headers["auth-token"] = apiUtil.crypto.base64Encode(JSON.stringify(userToken))
     }
