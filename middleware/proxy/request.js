@@ -46,8 +46,6 @@ module.exports = co.wrap(function* () {
     //删除代理服务器授权需要的header-key,防止伪造
     //delete options.headers['auth-token']
 
-    console.log(this.request.url, this.authorize.clientTokenInfo)
-
     let userToken = null
     if (this.authorize.tokenInfo) {
         userToken = {
@@ -74,7 +72,7 @@ module.exports = co.wrap(function* () {
             type: this.authorize.clientTokenInfo.tokenType
         }
     }
-
+    console.log(userToken)
     if (userToken) {
         options.headers["auth-token"] = apiUtil.crypto.base64Encode(JSON.stringify(userToken))
     }
