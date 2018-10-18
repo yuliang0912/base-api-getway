@@ -22,7 +22,7 @@ module.exports = co.wrap(function* (clientId, timeLine, sign, url) {
     } catch (e) {
     }
 
-    console.log(this.get('authentication'), JSON.parse(new Buffer(tokenInfo, 'base64').toString()))
+
 
     return true
 })

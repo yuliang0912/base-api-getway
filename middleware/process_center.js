@@ -22,7 +22,7 @@ module.exports = co.wrap(function *(ctx, next) {
     ctx.trackLog("进入代理主流程")
 
     var routeInfo = yield routeAuthorize.call(ctx)
-
+    console.log(routeInfo)
     if (routeInfo && Array.isArray(routeInfo.config.auth)) {
         var currApiCom = coms.channelComKeys.filter(t => routeInfo.config.auth.indexOf(t) > -1).map(com => {
             return coms.channelCom[com].main.call(ctx, ctx)

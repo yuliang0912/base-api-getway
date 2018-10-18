@@ -11,9 +11,11 @@ const clientAuthorize = require('../authorize/client_authorize')
 const tokenAuthorize = require('../authorize/token_authorize')
 const clientCredentialsAuthorize = require('../authorize/client_credentials_authorize')
 
-module.exports.main = co.wrap(function *() {
+module.exports.main = co.wrap(function* () {
     var authorizes = []
     var grantType = this.checkQuery("grantType").default('accesstoken').value
+
+    console.log(111, grantType, this.request.url, this.get('authentication'))
 
     switch (grantType) {
         case 'accesstoken': //accessToken认证模式
