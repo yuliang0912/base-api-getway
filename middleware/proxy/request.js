@@ -62,6 +62,9 @@ module.exports = co.wrap(function* () {
             info: this.authorize.jwtInfo,
             type: 'jwt'
         }
+        if (this.request.url.index('current')) {
+            console.log(userToken, this.cookies.get('authInfo'))
+        }
         if (this.cookies.get('authInfo')) {
             options.headers["authorization"] = `Bearer ${this.cookies.get('authInfo')}`
         }
