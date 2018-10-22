@@ -76,7 +76,7 @@ module.exports = co.wrap(function* () {
         options.headers["auth-token"] = apiUtil.crypto.base64Encode(JSON.stringify(userToken))
     }
 
-    if (this.request.url.includes('current') || this.url.includes('current')) {
+    if (this.url.includes('current')) {
         console.log(userToken, this.cookies.get('authInfo'))
     }
 
