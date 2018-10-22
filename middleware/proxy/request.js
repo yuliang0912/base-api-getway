@@ -76,10 +76,6 @@ module.exports = co.wrap(function* () {
         options.headers["auth-token"] = apiUtil.crypto.base64Encode(JSON.stringify(userToken))
     }
 
-    if (this.url.includes('current')) {
-        console.log(userToken, this.cookies.get('authInfo'))
-    }
-
     yield new Promise((resolve, reject) => {
         let ProxyServer = Request(options, (err, response) => {
             err ? reject(err)
