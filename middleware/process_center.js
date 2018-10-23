@@ -14,8 +14,8 @@ const routeAuthorize = require('./authorize/route_proxy_authorize')
 module.exports = co.wrap(function *(ctx, next) {
 
     //暂时允许跨域请求
-    ctx.set("Access-Control-Allow-Origin", "*")
-    ctx.set("Access-Control-Allow-Credentials", "true")
+    // ctx.set("Access-Control-Allow-Origin", "*")
+    // ctx.set("Access-Control-Allow-Credentials", "true")
     // ctx.set("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS")
     // ctx.set("Access-Control-Allow-Headers", "authorization,x-requested-with,content-type")
 
